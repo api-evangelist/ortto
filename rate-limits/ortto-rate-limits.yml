@@ -1,0 +1,81 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Ortto
+providerId: ortto
+created: '2026-06-25'
+modified: '2026-06-25'
+reconciled: false
+tags:
+- Marketing Automation
+- CDP
+- Customer Data Platform
+- Analytics
+- Email
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The Ortto API enforces per-request payload limits and per-resource throttles
+  rather than a single global RPM. People merge and activity create accept up to
+  100 records per request; activity payloads are capped at 2 MB. Custom activity
+  events are limited to 50 events per activity per contact per 24 hours, and
+  activities can be backdated up to 90 days (or the configured data retention
+  period). Account-level request-rate limits are applied by Ortto but specific
+  per-endpoint RPM/RPS values are not publicly reconciled in this artifact.
+notes: >-
+  Confirm current per-endpoint request-rate limits and burst behavior with Ortto
+  support or the developer guide during reconciliation; documented limits here
+  are the published payload and frequency caps.
+sources:
+- https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
+- https://help.ortto.com/a-271-create-a-custom-activity-event-create
+- https://help.ortto.com/a-223-developer-guide
+responseCodes:
+  throttled: 429
+limits:
+- name: People Per Merge Request
+  scope: request
+  metric: records
+  limit: 100
+  notes: Up to 100 people per /person/merge call.
+- name: Activities Per Create Request
+  scope: request
+  metric: records
+  limit: 100
+  notes: Up to 100 activity events per /activities/create call.
+- name: Activity Payload Size
+  scope: request
+  metric: bytes
+  limit: 2097152
+  notes: 2 MB maximum payload for /activities/create.
+- name: Custom Activity Events Per Contact
+  scope: contact
+  metric: events
+  limit: 50
+  notes: 50 events per custom activity per contact per 24 hours.
+- name: Activity Backdating Window
+  scope: request
+  metric: days
+  limit: 90
+  notes: Activities may be backdated up to 90 days or the configured retention period.
+- name: Transactional Email Attachments
+  scope: request
+  metric: attachments
+  limit: 5
+  notes: Up to 5 base64-encoded attachments per transactional email.
+- name: Account Request Rate
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Per-account request-rate throttling applies; specific values not publicly reconciled.
+policies:
+- name: Regional Endpoints
+  description: Use the AU or EU service endpoints for accounts whose instance region is set accordingly.
+- name: Async Processing
+  description: Set async true on large merge batches so Ortto queues processing instead of handling inline.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

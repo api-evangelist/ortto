@@ -1,0 +1,103 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Ortto
+providerId: ortto
+created: '2026-06-25'
+modified: '2026-06-25'
+reconciled: true
+tags:
+- Marketing Automation
+- CDP
+- Customer Data Platform
+- Analytics
+- Email
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Ortto spend. Ortto bills a fixed monthly (or annual)
+  subscription tied to the number of contacts in the account rather than
+  per-API-call usage; the same subscription governs both app and API access.
+  Additional contacts and email volume are billed as add-ons at $99/month per
+  100,000. Transactional email and SMS are features of supporting plans. Cost
+  is therefore driven primarily by contact count and add-on volume, not by API
+  request count.
+notes: >-
+  Plan prices and add-on rates change; verify against the Ortto pricing page
+  during reconciliation. Transactional email via API requires plan support and
+  Ortto approval.
+sources:
+- https://ortto.com/pricing/
+- https://help.ortto.com/a-43-ortto-pricing-changes-faq
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Ortto
+serviceCategory: Marketing and Customer Engagement
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Ortto
+  ServiceCategory: Marketing and Customer Engagement
+  ProviderName: Ortto
+  PublisherName: Ortto
+  InvoiceIssuerName: Ortto
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: plan_subscription
+  description: Recurring plan fee tied to the contact tier (Starter, Professional, Business, Enterprise).
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: contacts
+  description: Number of contacts in the account, the primary driver of plan tier and add-on cost.
+  unit: contacts
+  aggregation: max
+  dimensions:
+  - account
+- name: add_on_contacts
+  description: Additional contacts beyond the plan allowance, billed per 100,000.
+  unit: contacts
+  aggregation: sum
+  dimensions:
+  - account
+- name: add_on_email_volume
+  description: Additional email volume beyond the plan allowance, billed per 100,000.
+  unit: emails
+  aggregation: sum
+  dimensions:
+  - account
+- name: transactional_messages
+  description: Transactional email and SMS sent via the API on supporting plans.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+  - channel
+principles:
+- name: Visibility
+  description: Track contact count against the plan allowance; watch for tier upgrades and add-on triggers.
+- name: Allocation
+  description: Tag custom API keys per integration/team to attribute API-driven contact and message growth.
+- name: Optimization
+  description: Archive or delete stale contacts to stay within tier; batch merge calls (up to 100) to reduce overhead; right-size the plan to actual contact volume.
+- name: Accountability
+  description: Assign an owner for the Ortto subscription; review contact growth and add-on charges monthly against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

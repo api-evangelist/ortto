@@ -1,0 +1,75 @@
+aid: ortto
+name: Ortto
+review:
+  question: Does Ortto expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-25'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Ortto's public API is REST/HTTP only. The
+    only event-driven surface is outbound webhooks triggered from Ortto
+    journeys/playbooks, which are configured in the Ortto app and are out of
+    scope for an AsyncAPI WebSocket or SSE model. No streaming HTTP (SSE) or
+    WebSocket transport is documented.
+findings:
+  summary: |
+    Ortto (formerly Autopilot) does not publish a documented public WebSocket
+    API. The Ortto API is a request/response REST API served from
+    https://api.ap3api.com/v1 (with AU and EU regional variants), authenticated
+    with a custom API key in the X-Api-Key header. Real-time integration is
+    delivered through outbound webhooks configured inside Ortto journeys, not
+    through a client-facing WebSocket or Server-Sent Events transport. No
+    ws:// or wss:// endpoint is documented for people, activities, campaigns,
+    tags, or transactional messaging.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.ap3api.com/v1
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: Outbound webhooks fired from Ortto journeys/playbooks to customer-provided URLs; configured in-app, not a client REST resource.
+      documented: true
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming transport is documented.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Ortto developer guide or API reference as of the review date.
+  endpointsConfirmedRest:
+    - POST https://api.ap3api.com/v1/person/merge
+    - POST https://api.ap3api.com/v1/person/get
+    - POST https://api.ap3api.com/v1/person/get-by-ids
+    - POST https://api.ap3api.com/v1/person/delete
+    - POST https://api.ap3api.com/v1/accounts/merge
+    - POST https://api.ap3api.com/v1/activities/create
+    - POST https://api.ap3api.com/v1/definitions/activity/create
+    - POST https://api.ap3api.com/v1/tags/get
+    - POST https://api.ap3api.com/v1/campaign/calendar
+    - POST https://api.ap3api.com/v1/campaign/reports/get
+    - POST https://api.ap3api.com/v1/assets/get-html
+    - POST https://api.ap3api.com/v1/transactional/send
+    - POST https://api.ap3api.com/v1/transactional/send-sms
+sources:
+  - url: https://help.ortto.com/a-223-developer-guide
+    type: Documentation
+    note: Developer guide lists the REST base URL https://api.ap3api.com/ and regional variants; no WebSocket mentioned.
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+    note: API reference enumerates REST POST endpoints for people, accounts, activities, campaigns, tags, and transactional messaging.
+  - url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
+    type: Documentation
+    note: People merge is a POST to /v1/person/merge using the X-Api-Key header.
+  - url: https://help.ortto.com/a-242-using-the-api-to-send-emails
+    type: Documentation
+    note: Transactional email is a single POST returning 202; no streaming transport.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists. The only event-driven surface
+    is outbound webhooks configured in-app, which are documented in apis.yml as
+    a webhooks API entry but do not warrant an AsyncAPI WebSocket/SSE document.

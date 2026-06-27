@@ -1,0 +1,140 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Ortto
+providerId: ortto
+created: '2026-06-25'
+modified: '2026-06-25'
+reconciled: true
+tags:
+- Marketing Automation
+- CDP
+- Customer Data Platform
+- Analytics
+- Email
+- Plans
+description: >-
+  Ortto (formerly Autopilot) sells contact-based subscription plans rather than
+  per-call API pricing; the same plan governs both app and API usage. Published
+  tiers are Starter, Professional, and Business, with a custom Enterprise tier.
+  Prices below reflect monthly billing; annual billing is lower. Extra contacts
+  and email volume are sold as add-ons. A 14-day free trial is offered on all
+  plans, and there is no permanent free plan.
+notes: >-
+  Prices and included contact volumes change; verify against the Ortto pricing
+  page during reconciliation. Transactional email via API requires a supporting
+  plan and approval from Ortto support.
+sources:
+- https://ortto.com/pricing/
+- https://help.ortto.com/a-43-ortto-pricing-changes-faq
+plans:
+- id: ortto-starter
+  name: Starter
+  type: subscription
+  description: >-
+    Entry tier including 5,000 contacts, with month-to-month billing available.
+  entries:
+  - label: Starter Subscription
+    name: starter
+    type: flat
+    metric: contacts
+    limit: 5000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $199/month (approx $169/month billed annually) for 5,000 contacts
+    userMultiplied: false
+  elements:
+  - name: Marketing Automation
+  - name: Customer Data Platform
+  - name: Email
+  - name: Forms and Popups
+  - name: API Access
+- id: ortto-professional
+  name: Professional
+  type: subscription
+  description: >-
+    Mid tier including 10,000 contacts, with month-to-month commitment available.
+  entries:
+  - label: Professional Subscription
+    name: professional
+    type: flat
+    metric: contacts
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $599/month (approx $509/month billed annually) for 10,000 contacts
+    userMultiplied: false
+  elements:
+  - name: Marketing Automation
+  - name: Customer Data Platform
+  - name: Analytics
+  - name: Transactional Email
+  - name: API Access
+- id: ortto-business
+  name: Business
+  type: subscription
+  description: >-
+    Higher tier including 10,000 contacts; requires an annual plan.
+  entries:
+  - label: Business Subscription
+    name: business
+    type: flat
+    metric: contacts
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $999/month (approx $849/month billed annually) for 10,000 contacts
+    userMultiplied: false
+  elements:
+  - name: Advanced Analytics
+  - name: Customer Data Platform
+  - name: Transactional Email
+  - name: Priority Support
+  - name: API Access
+- id: ortto-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom tier for large contact volumes with negotiated terms, dedicated
+    support, and additional services. Requires an annual plan. Contact Ortto
+    sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Contact Volume
+  - name: Dedicated Support
+  - name: Custom Terms
+- id: ortto-add-ons
+  name: Add-ons
+  type: usage
+  description: >-
+    Additional contacts or email volume beyond the plan allowance.
+  entries:
+  - label: Extra Contacts / Email Volume
+    name: add_on_volume
+    type: usage
+    metric: contacts
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 100000
+    price: $99/month per 100,000 contacts or emails
+    userMultiplied: false
+  elements:
+  - name: Additional Contacts
+  - name: Additional Email Volume
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

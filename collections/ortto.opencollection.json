@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ortto API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "X-Api-Key",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "People",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update one or more people (merge)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/merge",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"people\": [{ \"fields\": { \"str::email\": \"person@example.com\" } }],\n  \"merge_by\": [\"str::email\"],\n  \"merge_strategy\": 2\n}"
+            }
+          },
+          "docs": "Create or update up to 100 people in one request using merge_by and merge_strategy."
+        },
+        {
+          "info": {
+            "name": "Retrieve one or more people (get)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/get",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"limit\": 50,\n  \"fields\": [\"str::email\", \"str::first\"]\n}"
+            }
+          },
+          "docs": "Retrieve people matching a filter with requested fields, sort, limit, and offset."
+        },
+        {
+          "info": {
+            "name": "Retrieve people by IDs (get-by-ids)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/get-by-ids",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"contact_ids\": [\"00000000-0000-0000-0000-000000000000\"]\n}"
+            }
+          },
+          "docs": "Retrieve people by their Ortto contact IDs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update one or more accounts (merge)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/accounts/merge",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"accounts\": [{ \"fields\": { \"str:o::name\": \"Acme Inc\" } }],\n  \"merge_by\": [\"str:o::name\"]\n}"
+            }
+          },
+          "docs": "Create or update accounts (previously organizations) using merge semantics."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Activities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a custom activity event (create)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/activities/create",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"activities\": [{ \"activity_id\": \"act:cm:placed-order\", \"fields\": { \"str::email\": \"person@example.com\" } }],\n  \"merge_by\": [\"str::email\"]\n}"
+            }
+          },
+          "docs": "Send up to 100 custom activity events per request (max 2 MB)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of tags (get)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/tags/get",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the tags configured on the account; optional q filters by search term."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve campaigns by time period (calendar)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/campaign/calendar",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"type\": \"journey\",\n  \"limit\": 50\n}"
+            }
+          },
+          "docs": "Retrieve campaigns filtered by type, state, folder, and search query."
+        },
+        {
+          "info": {
+            "name": "Retrieve a campaign or asset report (get)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/campaign/reports/get",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"campaign_id\": \"00000000-0000-0000-0000-000000000000\"\n}"
+            }
+          },
+          "docs": "Retrieve a report for a campaign or asset."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactional",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a transactional email (send)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/transactional/send",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"email_id\": \"00000000-0000-0000-0000-000000000000\",\n  \"merge_by\": [\"str::email\"],\n  \"people\": [{ \"fields\": { \"str::email\": \"person@example.com\" } }]\n}"
+            }
+          },
+          "docs": "Send a transactional email; returns 202 on acceptance. Set non_transactional true for marketing."
+        },
+        {
+          "info": {
+            "name": "Send a transactional SMS (send-sms)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/transactional/send-sms",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"sms_id\": \"00000000-0000-0000-0000-000000000000\",\n  \"merge_by\": [\"str::email\"],\n  \"people\": [{ \"fields\": { \"str::email\": \"person@example.com\" } }]\n}"
+            }
+          },
+          "docs": "Send a transactional SMS message."
+        }
+      ]
+    }
+  ]
+}

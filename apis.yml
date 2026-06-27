@@ -1,0 +1,147 @@
+aid: ortto
+url: https://raw.githubusercontent.com/api-evangelist/ortto/refs/heads/main/apis.yml
+name: Ortto
+kind: company
+description: Ortto (formerly Autopilot) is a marketing automation, customer data
+  platform (CDP), and analytics product. Its REST API at https://api.ap3api.com/v1
+  lets applications create and update people/contacts and accounts, send custom
+  activity events, manage tags, retrieve campaign reports, and send transactional
+  email and SMS, all authenticated with a custom API key via the X-Api-Key header.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Marketing Automation
+- CDP
+- Customer Data Platform
+- Analytics
+- Email
+created: '2026-06-25'
+modified: '2026-06-25'
+specificationVersion: '0.19'
+apis:
+- aid: ortto:people-contacts
+  name: Ortto People / Contacts API
+  tags:
+  - People
+  - Contacts
+  - CDP
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
+    type: Documentation
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Create or update one or more people (merge), retrieve people by query
+    or by IDs, archive, delete, restore, and manage subscriptions and custom fields,
+    with configurable merge strategies.
+- aid: ortto:custom-activities
+  name: Ortto Custom Activities API
+  tags:
+  - Activities
+  - Events
+  - Tracking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/a-233-custom-activities-guide
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-271-create-a-custom-activity-event-create
+    type: Documentation
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Send up to 100 custom activity events per request (2 MB max) and
+    manage activity definitions, optionally creating or updating the associated
+    person via merge_by or person_id.
+- aid: ortto:campaigns
+  name: Ortto Campaigns API
+  tags:
+  - Campaigns
+  - Reports
+  - Assets
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/a-686-retrieve-a-campaign-or-asset-report-get
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-887-using-the-api-to-export-campaign-data
+    type: Documentation
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Retrieve campaigns by time period (calendar), pull campaign and
+    asset reports, and fetch the HTML or SMS body of email and SMS assets.
+- aid: ortto:tags
+  name: Ortto Tags API
+  tags:
+  - Tags
+  - Segmentation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/a-263-retrieve-a-list-of-tags-get
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-227-tagging-and-untagging-people
+    type: Documentation
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Retrieve the list of tags configured on an account, optionally
+    filtered by a search term; people are tagged and untagged through the people
+    merge endpoint.
+- aid: ortto:transactional-email
+  name: Ortto Transactional Email API
+  tags:
+  - Transactional
+  - Email
+  - Messaging
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/a-242-using-the-api-to-send-emails
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-827-send-emails-via-api
+    type: Documentation
+  - url: https://help.ortto.com/a-250-api-reference
+    type: APIReference
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Send transactional (or, with non_transactional set, marketing)
+    email and SMS via a single POST, with support for up to 5 base64-encoded
+    attachments; the endpoint returns a 202 on acceptance.
+- aid: ortto:webhooks
+  name: Ortto Webhooks
+  tags:
+  - Webhooks
+  - Events
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.ortto.com/a-223-developer-guide
+  baseURL: https://api.ap3api.com/v1
+  properties:
+  - url: https://help.ortto.com/a-223-developer-guide
+    type: Documentation
+  - url: openapi/ortto-openapi.yml
+    type: OpenAPI
+  description: Outbound webhooks delivered from Ortto journeys/playbooks let
+    external systems react to contact and campaign events; configuration is
+    done in the Ortto app rather than through a dedicated public REST resource.
+common:
+- type: GitHubOrganization
+  url: https://github.com/autopilot3
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ortto
+- type: Website
+  url: https://ortto.com/
+- type: Documentation
+  url: https://ortto.com/developers/
+- type: Plans
+  url: plans/ortto-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/ortto-rate-limits.yml
+- type: FinOps
+  url: finops/ortto-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

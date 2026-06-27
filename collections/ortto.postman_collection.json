@@ -1,0 +1,257 @@
+{
+  "info": {
+    "name": "Ortto API",
+    "description": "Postman collection for the Ortto (formerly Autopilot) REST API. All requests use the X-Api-Key header for authentication against https://api.ap3api.com/v1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.ap3api.com/v1"
+    },
+    {
+      "key": "apiKey",
+      "value": "CUSTOM-PRIVATE-API-KEY"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "X-Api-Key" },
+      { "key": "value", "value": "{{apiKey}}" },
+      { "key": "in", "value": "header" }
+    ]
+  },
+  "item": [
+    {
+      "name": "People",
+      "item": [
+        {
+          "name": "Create or update one or more people (merge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/person/merge",
+              "host": ["{{baseUrl}}"],
+              "path": ["person", "merge"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"people\": [\n    {\n      \"fields\": {\n        \"str::email\": \"person@example.com\",\n        \"str::first\": \"Jane\"\n      }\n    }\n  ],\n  \"merge_by\": [\"str::email\"],\n  \"merge_strategy\": 2,\n  \"async\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Retrieve one or more people (get)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/person/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["person", "get"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 50,\n  \"offset\": 0,\n  \"fields\": [\"str::email\", \"str::first\", \"str::last\"],\n  \"sort_order\": \"asc\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Retrieve people by IDs (get-by-ids)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/person/get-by-ids",
+              "host": ["{{baseUrl}}"],
+              "path": ["person", "get-by-ids"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contact_ids\": [\"00000000-0000-0000-0000-000000000000\"],\n  \"fields\": [\"str::email\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create or update one or more accounts (merge)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/merge",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "merge"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accounts\": [\n    {\n      \"fields\": {\n        \"str:o::name\": \"Acme Inc\"\n      }\n    }\n  ],\n  \"merge_by\": [\"str:o::name\"],\n  \"merge_strategy\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Activities",
+      "item": [
+        {
+          "name": "Create a custom activity event (create)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/activities/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["activities", "create"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activities\": [\n    {\n      \"activity_id\": \"act:cm:placed-order\",\n      \"attributes\": {\n        \"int:cm:order-total\": 4200\n      },\n      \"fields\": {\n        \"str::email\": \"person@example.com\"\n      }\n    }\n  ],\n  \"merge_by\": [\"str::email\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "item": [
+        {
+          "name": "Retrieve a list of tags (get)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tags/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["tags", "get"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "Retrieve campaigns by time period (calendar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/campaign/calendar",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaign", "calendar"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"journey\",\n  \"limit\": 50,\n  \"sort_order\": \"desc\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Retrieve a campaign or asset report (get)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/campaign/reports/get",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaign", "reports", "get"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaign_id\": \"00000000-0000-0000-0000-000000000000\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactional",
+      "item": [
+        {
+          "name": "Send a transactional email (send)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transactional/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactional", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_id\": \"00000000-0000-0000-0000-000000000000\",\n  \"merge_by\": [\"str::email\"],\n  \"people\": [\n    {\n      \"fields\": {\n        \"str::email\": \"person@example.com\"\n      }\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Send a transactional SMS (send-sms)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Api-Key", "value": "{{apiKey}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transactional/send-sms",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactional", "send-sms"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sms_id\": \"00000000-0000-0000-0000-000000000000\",\n  \"merge_by\": [\"str::email\"],\n  \"people\": [\n    {\n      \"fields\": {\n        \"str::email\": \"person@example.com\",\n        \"phn::phone\": \"+15555550123\"\n      }\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
