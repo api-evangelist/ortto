@@ -128,6 +128,8 @@ apis:
     external systems react to contact and campaign events; configuration is
     done in the Ortto app rather than through a dedicated public REST resource.
 common:
+- type: AgenticAccess
+  url: agentic-access/ortto-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/ortto-vulnerability-disclosure.yml
 - type: DomainSecurity
