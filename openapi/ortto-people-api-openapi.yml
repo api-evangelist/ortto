@@ -1,0 +1,246 @@
+openapi: 3.0.1
+info:
+  title: Ortto Accounts People API
+  description: REST API for Ortto (formerly Autopilot), a marketing automation, customer data platform (CDP), and analytics product. The API lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign and asset reports, and send transactional email and SMS. Every request is authenticated with a custom API key supplied in the X-Api-Key header. The default service endpoint is https://api.ap3api.com/v1; customers in Australia or Europe use https://api.au.ap3api.com/v1 or https://api.eu.ap3api.com/v1 respectively.
+  termsOfService: https://ortto.com/terms-of-service/
+  contact:
+    name: Ortto Support
+    url: https://help.ortto.com/
+  version: '1.0'
+servers:
+- url: https://api.ap3api.com/v1
+  description: Default service endpoint
+- url: https://api.au.ap3api.com/v1
+  description: Australia service endpoint
+- url: https://api.eu.ap3api.com/v1
+  description: Europe service endpoint
+security:
+- ApiKeyAuth: []
+tags:
+- name: People
+  description: Create, update, retrieve, and manage people (contacts).
+paths:
+  /person/merge:
+    post:
+      operationId: mergePeople
+      tags:
+      - People
+      summary: Create or update one or more people (merge)
+      description: Creates or updates up to 100 people in a single request. Matching of existing records is controlled with merge_by, merge_strategy, and find_strategy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonMergeRequest'
+      responses:
+        '200':
+          description: People created or updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonMergeResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/get:
+    post:
+      operationId: getPeople
+      tags:
+      - People
+      summary: Retrieve one or more people (get)
+      description: Retrieves people matching a filter, with the requested fields, sort order, limit, and offset for pagination.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonGetRequest'
+      responses:
+        '200':
+          description: Matching people.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonGetResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/get-by-ids:
+    post:
+      operationId: getPeopleByIds
+      tags:
+      - People
+      summary: Retrieve people by their Ortto IDs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_ids:
+                  type: array
+                  items:
+                    type: string
+                fields:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Matching people.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonGetResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/delete:
+    post:
+      operationId: deletePeople
+      tags:
+      - People
+      summary: Delete one or more people
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                people:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      contact_id:
+                        type: string
+      responses:
+        '200':
+          description: People deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    PersonMergeRequest:
+      type: object
+      required:
+      - people
+      - merge_by
+      properties:
+        people:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/PersonInput'
+        merge_by:
+          type: array
+          description: Up to 3 field IDs used to identify existing records.
+          maxItems: 3
+          items:
+            type: string
+        merge_strategy:
+          type: integer
+          description: 1 = append only, 2 = overwrite existing, 3 = ignore.
+          enum:
+          - 1
+          - 2
+          - 3
+        find_strategy:
+          type: integer
+          description: 0 = any, 1 = sequential, 2 = all.
+          enum:
+          - 0
+          - 1
+          - 2
+        async:
+          type: boolean
+          description: Queue processing when true; recommended for large batches.
+        skip_non_existing:
+          type: boolean
+          description: When true, only updates existing records.
+        suppression_list_field_id:
+          type: string
+    PersonInput:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Map of field IDs to values for the person.
+          additionalProperties: true
+        location:
+          type: object
+          additionalProperties: true
+        tags:
+          type: array
+          items:
+            type: string
+        unset_tags:
+          type: array
+          items:
+            type: string
+    PersonMergeResponse:
+      type: object
+      properties:
+        people:
+          type: array
+          items:
+            type: object
+            properties:
+              person_id:
+                type: string
+              status:
+                type: string
+                description: e.g. created, updated, or suppressed.
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+    PersonGetResponse:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        offset:
+          type: integer
+        has_more:
+          type: boolean
+    PersonGetRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sort_by_field_id:
+          type: string
+        sort_order:
+          type: string
+          enum:
+          - asc
+          - desc
+        fields:
+          type: array
+          items:
+            type: string
+        filter:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Custom private API key configured in Ortto under Settings, supplied on every request in the X-Api-Key header.
