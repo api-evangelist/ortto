@@ -1,0 +1,24 @@
+{
+  "provider": "ortto",
+  "sources": [
+    "ortto-accounts-api-openapi.yml",
+    "ortto-activities-api-openapi.yml",
+    "ortto-campaigns-api-openapi.yml",
+    "ortto-people-api-openapi.yml",
+    "ortto-tags-api-openapi.yml",
+    "ortto-transactional-api-openapi.yml"
+  ],
+  "outputs": [
+    "ortto-accounts-api-openapi.yml",
+    "ortto-activities-api-openapi.yml",
+    "ortto-campaigns-api-openapi.yml",
+    "ortto-people-api-openapi.yml",
+    "ortto-tags-api-openapi.yml",
+    "ortto-transactional-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
