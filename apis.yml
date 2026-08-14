@@ -6,7 +6,14 @@ description: Ortto (formerly Autopilot) is a marketing automation, customer data
   platform (CDP), and analytics product. Its REST API at https://api.ap3api.com/v1
   lets applications create and update people/contacts and accounts, send custom
   activity events, manage tags, retrieve campaign reports, and send transactional
-  email and SMS, all authenticated with a custom API key via the X-Api-Key header.
+  email and SMS, all authenticated with a custom API key via the X-Api-Key header,
+  with EU and AU service endpoints for accounts in those data-residency regions.
+  Ortto also runs a first-party hosted MCP server, released in version 1.27
+  (December 2025), giving agents a read-heavy surface over campaigns, contacts,
+  audiences, reports, schema and knowledge-base content. Ortto publishes no
+  machine-readable OpenAPI; the specifications here are scaffolded from its
+  help-center API reference. Ortto announced in April 2026 that it is joining
+  Canva.
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -27,20 +34,27 @@ tags:
 - Customer Data Platform
 - Analytics
 - Email
+- SMS
+- Transactional Email
+- Webhooks
+- MCP
+- Push Notifications
 created: '2026-06-25'
-modified: '2026-06-25'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: ortto:ortto-accounts-api
   name: Ortto Accounts API
   description: Create, update, retrieve, and manage accounts (organizations).
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - Accounts
   properties:
   - type: OpenAPI
     url: openapi/ortto-accounts-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-accounts-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -58,13 +72,15 @@ apis:
 - aid: ortto:ortto-activities-api
   name: Ortto Activities API
   description: Send custom activity events and manage activity definitions.
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - Activities
   properties:
   - type: OpenAPI
     url: openapi/ortto-activities-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-activities-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -82,13 +98,15 @@ apis:
 - aid: ortto:ortto-campaigns-api
   name: Ortto Campaigns API
   description: Retrieve campaigns, reports, and assets.
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - Campaigns
   properties:
   - type: OpenAPI
     url: openapi/ortto-campaigns-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-campaigns-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -106,13 +124,15 @@ apis:
 - aid: ortto:ortto-people-api
   name: Ortto People API
   description: Create, update, retrieve, and manage people (contacts).
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - People
   properties:
   - type: OpenAPI
     url: openapi/ortto-people-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-people-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -130,13 +150,15 @@ apis:
 - aid: ortto:ortto-tags-api
   name: Ortto Tags API
   description: Retrieve account tags.
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - Tags
   properties:
   - type: OpenAPI
     url: openapi/ortto-tags-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-tags-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -154,13 +176,15 @@ apis:
 - aid: ortto:ortto-transactional-api
   name: Ortto Transactional API
   description: Send transactional email and SMS.
-  humanURL: https://help.ortto.com/developer/latest/api-reference/people/
+  humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
   - Transactional
   properties:
   - type: OpenAPI
     url: openapi/ortto-transactional-api-openapi.yml
+  - type: Overlay
+    url: overlays/ortto-transactional-api-overlay.yaml
   - type: Documentation
     url: https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge
   - type: APIReference
@@ -200,6 +224,76 @@ common:
   url: finops/ortto-finops.yml
 - url: https://ortto.com/blog
   type: Blog
+- type: Packages
+  url: packages/ortto-packages.yml
+- type: SDKs
+  url: packages/ortto-packages.yml
+- type: WellKnown
+  url: well-known/ortto-well-known.yml
+- type: SecurityTxt
+  url: well-known/ortto-security.txt
+- type: Security
+  url: security/ortto-vulnerability-disclosure.yml
+- type: TrustCenter
+  url: security/ortto-trust-center.yml
+- type: Compliance
+  url: security/ortto-trust-center.yml
+- type: MCPServer
+  url: mcp/ortto-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/ortto-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/ortto-llms.txt
+- type: Conformance
+  url: conformance/ortto-conformance.yml
+- type: ErrorCatalog
+  url: errors/ortto-problem-types.yml
+- type: Conventions
+  url: conventions/ortto-conventions.yml
+- type: Lifecycle
+  url: lifecycle/ortto-lifecycle.yml
+- type: DataModel
+  url: data-model/ortto-data-model.yml
+- type: Components
+  url: components/ortto-components.yml
+- type: Webhooks
+  url: asyncapi/ortto-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: ChangeLog
+  url: changelog/ortto-changelog.yml
+- type: ChangeLog
+  url: https://roadmap.ortto.com/changelog
+- type: StatusPage
+  url: https://www.orttostatus.com/
+- type: Roadmap
+  url: https://roadmap.ortto.com/
+- type: DeveloperPortal
+  url: https://ortto.com/developers/
+- type: GettingStarted
+  url: https://help.ortto.com/a-222-ortto-developer-documentation
+- type: Support
+  url: https://help.ortto.com/
+- type: SignUp
+  url: https://ortto.com/trial/
+- type: Login
+  url: https://ortto.com/login
+- type: TermsOfService
+  url: https://ortto.com/terms/
+- type: PrivacyPolicy
+  url: https://ortto.com/privacy/
+- type: Integrations
+  url: https://ortto.com/integrations/
+- type: PostmanCollection
+  url: collections/ortto.postman_collection.json
+- type: OpenCollection
+  url: collections/ortto.opencollection.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1
