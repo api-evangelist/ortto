@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-910-ortto-mcp,
+  https://help.ortto.com/a-911-using-ortto-mcp-with-claude,
+  https://help.ortto.com/a-912-using-ortto-mcp-with-chatgpt, announced in the
+  Ortto 1.27 release (2025-12-19) at https://roadmap.ortto.com/changelog
+name: Ortto MCP
+status: published
+description: >-
+  Ortto ships a first-party hosted MCP server, announced in the 1.27 release
+  (19 December 2025) and documented in its own help-center category
+  (help.ortto.com/c-332-ortto-mcp). It is a remote HTTP MCP endpoint with three
+  regional deployments matching Ortto's data-residency regions (US, EU, AU).
+  There is no stdio package: an MCP client connects directly to the URL, so an
+  agent can reach it without anything installed locally. Authentication is a
+  scoped JWT the customer mints in the Ortto app under CDP > Data sources > MCP
+  data source and passes as a ?jwt= query parameter on the endpoint URL — the
+  server is not OAuth-protected and serves no OAuth metadata. The tool surface
+  is read-heavy (campaigns, contacts, audiences, reports, schema, brand book)
+  with a small set of write tools for email assets and knowledge-base articles.
+deployment:
+  mode: remote
+  endpoint: https://mcp-api-us.ortto.app/mcp
+  auth: api-key
+  verified: probed
+  note: >-
+    Endpoint URLs are published verbatim in Ortto's help center. All three hosts
+    were probed unauthenticated on 2026-08-13 and answered HTTP 403 from
+    awselb/2.0 — the hosts resolve and are live behind Ortto's own AWS load
+    balancer, but reject any request without the ?jwt= scoped key, so tools/list
+    could not be introspected anonymously. Tool names and descriptions below are
+    read from the provider's documentation, not from a live tools/list, and the
+    tools carry no inputSchema here for that reason.
+endpoints:
+- region: us
+  url: https://mcp-api-us.ortto.app/mcp?jwt=<scoped-key>
+  probe:
+    url: https://mcp-api-us.ortto.app/mcp
+    method: 'POST tools/list'
+    status: 403
+    checked: '2026-08-13'
+- region: eu
+  url: https://mcp-api-eu.ortto.app/mcp?jwt=<scoped-key>
+  probe:
+    url: https://mcp-api-eu.ortto.app/mcp
+    method: 'POST tools/list'
+    status: 403
+    checked: '2026-08-13'
+- region: au
+  url: https://mcp-api-au.ortto.app/mcp?jwt=<scoped-key>
+  probe:
+    url: https://mcp-api-au.ortto.app/mcp
+    method: 'POST tools/list'
+    status: 403
+    checked: '2026-08-13'
+authentication:
+  type: jwt
+  placement: query
+  parameter: jwt
+  provisioning: >-
+    Create an MCP data source in the Ortto app (CDP > Data sources > MCP data
+    source) and copy the generated Scoped key.
+  oauth: false
+  oauth_metadata_probe:
+    - url: https://mcp-api-us.ortto.app/.well-known/oauth-authorization-server
+      status: 403
+    - url: https://mcp-api-us.ortto.app/.well-known/oauth-protected-resource
+      status: 403
+clients_documented:
+- name: Claude
+  doc: https://help.ortto.com/a-911-using-ortto-mcp-with-claude
+  method: Add custom connector with the remote MCP server URL
+- name: ChatGPT
+  doc: https://help.ortto.com/a-912-using-ortto-mcp-with-chatgpt
+tools:
+- name: get_campaigns
+  category: campaigns
+  description: Retrieve a list of your campaigns with filtering and pagination options.
+- name: get_contacts
+  category: contacts
+  description: Retrieve contacts with filtering and search capabilities.
+- name: get_audiences
+  category: contacts
+  description: List all audiences in your account with search and pagination support.
+- name: get_email_report
+  category: reports
+  description: Email campaign performance metrics including opens and clicks.
+- name: get_journey_report
+  category: reports
+  description: Journey performance analytics.
+- name: get_journey_shape_report
+  category: reports
+  description: Metrics for a specific shape within a journey.
+- name: get_sms_report
+  category: reports
+  description: SMS campaign engagement statistics.
+- name: get_push_report
+  category: reports
+  description: Push notification delivery and engagement analytics.
+- name: list_reports
+  category: reports
+  description: List user-created reports with filtering options.
+- name: get_report
+  category: reports
+  description: Retrieve a specific report's data over a customizable timeframe.
+- name: get_schema
+  category: account
+  description: Complete account data schema including custom fields.
+- name: get_brand_book
+  category: account
+  description: Brand settings, colors and fonts.
+- name: create_asset
+  category: assets
+  description: Create an HTML email asset with metadata.
+- name: get_asset_html
+  category: assets
+  description: Retrieve the HTML content of an existing asset.
+- name: update_asset_meta
+  category: assets
+  description: Update asset names, subject lines and sender information.
+- name: get_index
+  category: knowledge-base
+  description: Retrieve knowledge base structure and hierarchy.
+- name: create_category
+  category: knowledge-base
+  description: Create a new knowledge base category.
+- name: create_article_from_html
+  category: knowledge-base
+  description: Create a knowledge base article from HTML with categorization.
+- name: move_article
+  category: knowledge-base
+  description: Relocate an article between categories.
+- name: modify_index
+  category: knowledge-base
+  description: Update knowledge base organization.
+summary:
+  tool_count: 20
+  read_tools: 15
+  write_tools: 5
+  regions: 3
+  schemas_available: false
+  schemas_note: >-
+    inputSchema for each tool requires an authenticated tools/list against a
+    scoped-key URL; not obtainable anonymously.

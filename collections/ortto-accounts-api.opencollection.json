@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ortto Accounts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update one or more accounts (merge)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/accounts/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates accounts (previously called organizations) using the same merge semantics as people."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

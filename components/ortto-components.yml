@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-69-tracking-code,
+  https://help.ortto.com/a-174-working-with-capture-widgets,
+  https://help.ortto.com/a-261-talk-javascript-api,
+  https://help.ortto.com/a-651-form-capture-widgets
+description: >-
+  Ortto's client-side surface is a single embedded JavaScript runtime — the
+  tracking code — that exposes a global ap3c object and renders the hosted UI
+  families (capture widgets, live chat, in-app messages) on the customer's own
+  pages. It is not a component library a developer imports from a registry:
+  there is no npm package, no web-component element names, and no versioned
+  bundle URL to pin. The snippet is copied from the Ortto app and floats to
+  whatever the tracking host serves, which is the finding — a consumer cannot
+  tell which build they are running.
+families:
+- name: Tracking code (ap3c)
+  kind: embedded-script
+  global: ap3c
+  init: "ap3c.init('<capture key>', 'https://capture-api.autopilotapp.com/', {cookieDomains: ['.mybrand.com']});"
+  hosts:
+  - https://capture-api.autopilotapp.com/
+  - https://t.ortto.com/
+  methods:
+  - name: ap3c.track()
+    description: >-
+      Associate the session and pass identifying data — email, ei (external id),
+      first, last and custom fields.
+  - name: ap3c.activity()
+    description: Record a custom activity event from the page.
+  - name: ap3c.getCookie()
+    description: Retrieve the current session id.
+  - name: ap3c.clearSession()
+    description: Clear the session id and associated caches.
+  options:
+  - skipNonExisting
+  - unsubscribe
+  - disableTalk
+  - gdpr.hasConsentGiven
+  - cookieDomains
+  - link
+  docs: https://help.ortto.com/a-69-tracking-code
+- name: Capture widgets
+  kind: hosted-ui
+  description: >-
+    Prebuilt on-page surfaces rendered by the tracking code and configured in
+    the Ortto app: forms, popups, surveys, NPS, spin-the-wheel, push opt-in and
+    conversation (live chat) widgets. Behaviour, targeting and display
+    scheduling are set in-app, not in code.
+  variants:
+  - form capture widget
+  - popup / survey widget
+  - NPS capture widget
+  - spin-the-wheel widget
+  - push capture widget
+  - conversation capture widget
+  docs: https://help.ortto.com/a-174-working-with-capture-widgets
+- name: Talk JavaScript API
+  kind: embedded-script
+  description: >-
+    Programmatic control of the Talk live-chat widget from the host page, part
+    of the same ap3c runtime.
+  docs: https://help.ortto.com/a-261-talk-javascript-api
+- name: Mobile in-app messages
+  kind: native-sdk-surface
+  description: >-
+    In-app notification and mobile capture widget surfaces rendered by the iOS,
+    Android and Flutter SDKs rather than by the web runtime.
+  docs: https://help.ortto.com/a-285-in-app-notifications-mobile-capture-widgets
+  see_also: packages/ortto-packages.yml
+distribution:
+  registry: none
+  package: null
+  version: null
+  pinned: false
+  note: >-
+    The tracking snippet is copied from the Ortto app and loads from Ortto's
+    tracking hosts unpinned; there is no versioned bundle URL, no npm or CDN
+    package name, and therefore no version to record. A consumer cannot
+    determine which build of the runtime their page is executing.
+summary:
+  families: 4
+  npm_distributed: false
+  web_components: false
+  versioned: false

@@ -1,0 +1,136 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTPS probes of every Ortto host named in apis.yml and openapi/ servers[]
+description: >-
+  Probe of the standard /.well-known/ discovery paths across every Ortto host.
+  Only ortto.com serves a real document: a security.txt carrying a responsible
+  disclosure form, contact addresses, policy links and a published bug bounty
+  rate table. The API hosts (api.ap3api.com and the MCP hosts on ortto.app)
+  answer 403 from the AWS load balancer for every /.well-known/ path, and the
+  help center returns its own HTML 404 page.
+hosts:
+- host: ortto.com
+  probes:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/plain
+    file: well-known/ortto-security.txt
+    document: true
+  - path: /.well-known/openid-configuration
+    status: 404
+    document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+- host: help.ortto.com
+  probes:
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+    note: HTML "Not Found" page from the help center, not a document.
+  - path: /.well-known/openid-configuration
+    status: 404
+    document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+- host: api.ap3api.com
+  probes:
+  - path: /.well-known/security.txt
+    status: 401
+    document: false
+    note: API gateway answers 401 JSON, not a security.txt.
+  - path: /.well-known/openid-configuration
+    status: 403
+    document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    document: false
+  - path: /.well-known/api-catalog
+    status: 403
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 403
+    document: false
+  - path: /.well-known/agent.json
+    status: 403
+    document: false
+- host: mcp-api-us.ortto.app
+  probes:
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    document: false
+    note: >-
+      The MCP host is live (awselb/2.0) but rejects every unauthenticated
+      request; the server authenticates with a scoped JWT passed as a ?jwt=
+      query parameter rather than OAuth, so no OAuth metadata is served.
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 403
+    document: false
+- host: mcp-api-eu.ortto.app
+  probes:
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 403
+    document: false
+- host: mcp-api-au.ortto.app
+  probes:
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 403
+    document: false
+summary:
+  paths_probed: 39
+  documents_served: 1
+  security_txt: true
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false

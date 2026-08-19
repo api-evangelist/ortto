@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ortto Accounts Campaigns API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve campaigns by time period",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/campaign/calendar",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve campaigns by time period"
+        },
+        {
+          "info": {
+            "name": "Retrieve a campaign or asset report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/campaign/reports/get",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve a campaign or asset report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

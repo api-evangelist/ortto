@@ -1,0 +1,40 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the operations in ../openapi/*.yml. Every
+  step is grounded in an operationId verified verbatim in the spec; cross-cutting
+  rules cite ../conventions/, ../errors/, ../rate-limits/ and
+  ../authentication/. Ortto publishes no AGENTS.md or skills of its own —
+  searched ortto.com, help.ortto.com and the autopilot3 GitHub organization.
+description: >-
+  Four skills covering the marquee flows the Ortto REST API supports: getting
+  people in, getting events in, getting messages out, and getting reporting
+  back. Each one carries the two facts an agent most needs and Ortto does not
+  put in a machine-readable place — that there is no idempotency key, and that
+  the 429 retry delay lives in the response body rather than a header.
+skills:
+- file: ortto-sync-contacts.md
+  name: Sync contacts into Ortto
+  api: openapi/ortto-people-api-openapi.yml
+  operations: [mergePeople, getPeople]
+- file: ortto-track-custom-activity.md
+  name: Track a custom activity event
+  api: openapi/ortto-activities-api-openapi.yml
+  operations: [createActivities, mergePeople]
+- file: ortto-send-transactional-message.md
+  name: Send a transactional email or SMS
+  api: openapi/ortto-transactional-api-openapi.yml
+  operations: [sendTransactionalEmail, sendTransactionalSms, mergePeople]
+- file: ortto-pull-campaign-reporting.md
+  name: Pull campaign reporting
+  api: openapi/ortto-campaigns-api-openapi.yml
+  operations: [getCampaignCalendar, getCampaignReport]
+not_covered:
+- operationId: mergeAccounts
+  reason: Account merge follows the same shape as person merge; covered by ortto-sync-contacts.md.
+- operationId: deletePeople
+  reason: Destructive single-call operation; no multi-step flow to package.
+- operationId: getPeopleByIds
+  reason: Single-call lookup covered inside ortto-sync-contacts.md.
+- operationId: getTags
+  reason: Single-call lookup with no downstream flow in the captured spec.

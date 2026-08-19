@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ortto Accounts People API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "People",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update one or more people (merge)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates up to 100 people in a single request. Matching of existing records is controlled with merge_by, merge_strategy, and find_strategy."
+        },
+        {
+          "info": {
+            "name": "Retrieve one or more people (get)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/get",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves people matching a filter, with the requested fields, sort order, limit, and offset for pagination."
+        },
+        {
+          "info": {
+            "name": "Retrieve people by their Ortto IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/get-by-ids",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve people by their Ortto IDs"
+        },
+        {
+          "info": {
+            "name": "Delete one or more people",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ap3api.com/v1/person/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete one or more people"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,106 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-251-configuring-a-webhook,
+  https://help.ortto.com/a-959-dynamic-webhooks,
+  https://help.ortto.com/a-626-how-to-update-contact-data-from-a-webhook-in-a-journey-or-playbook
+asyncapi: false
+asyncapi_note: >-
+  Ortto publishes no AsyncAPI document. Probed the docs host, the API host and
+  the autopilot3 GitHub organization; no /asyncapi.yaml, no event-catalog file
+  and no channel definitions exist. This artifact captures the webhook surface
+  as documented prose instead, and asserts nothing beyond it.
+description: >-
+  Ortto's event surface is outbound webhooks configured inside the product, not
+  a subscribable event API. A webhook is an action placed in a journey,
+  playbook or activity, so the "event catalog" is really the set of journey
+  actions and activity types a customer wires up rather than a fixed list of
+  topics a developer subscribes to. The customer configures the target URL,
+  HTTP method, optional basic-auth credentials and optional custom headers, and
+  selects up to ten additional person or account fields to include on top of a
+  mandatory locked set. Ortto adds no signature: there is no HMAC, no signing
+  secret and no verification header documented anywhere, so a receiver's only
+  authentication options are the basic-auth credentials or a shared secret the
+  customer places in a custom header themselves. Delivery is at-least-once and
+  Ortto says so plainly, telling consumers to de-duplicate on campaign_id +
+  contact_id + run_id.
+direction: outbound
+subscription_model: >-
+  Configured per journey/playbook/activity action inside the Ortto app. There is
+  no API to create, list or manage webhook subscriptions programmatically.
+delivery:
+  transport: HTTP
+  methods:
+  - POST
+  - GET
+  content: customizable HTTP request carrying Ortto data
+  at_least_once: true
+  deduplication:
+    required: true
+    key:
+    - campaign_id
+    - contact_id
+    - run_id
+    note: >-
+      Ortto documents that duplicate deliveries are possible and instructs
+      consumers to implement de-duplication using this key combination.
+  retries:
+    max_attempts: 12
+    backoff: escalating intervals from 5 minutes up to 1 day
+    retried_status_range: 400-599
+    not_retried:
+    - 400
+    - 401
+    - 403
+    - 404
+    - 405
+security:
+  signature: false
+  hmac: false
+  signing_secret: false
+  verification_header: null
+  basic_auth: optional
+  custom_headers: supported
+  note: >-
+    No cryptographic verification mechanism is documented. Receivers cannot
+    prove a payload came from Ortto except by the credentials or secret header
+    the customer configured on the webhook itself.
+payload:
+  mandatory_fields:
+  - contact_id
+  - email
+  - campaign_id
+  - campaign_name
+  - action_id
+  - action_name
+  optional_fields:
+    limit: 10
+    description: Additional person or account fields chosen when configuring the webhook.
+  activity_payload:
+    included_when: the "Send activity payload if relevant" checkbox is selected
+event_sources:
+  description: >-
+    Activity field ids are documented across these categories; each can trigger
+    or be carried by a webhook, but Ortto publishes them as help-center tables
+    rather than as a machine-readable catalog.
+  categories:
+  - email
+  - SMS
+  - push notifications
+  - web sessions
+  - audience and tag changes
+  - journeys
+  - playbooks
+  - capture widgets
+  - Talk conversations
+  - WhatsApp
+inbound:
+  supported: false
+  note: >-
+    Ortto has no inbound webhook receiver for third-party events; inbound data
+    arrives through the REST API, the tracking code, or a native integration.
+summary:
+  asyncapi_documents: 0
+  webhook_surface: true
+  signed: false
+  managed_via_api: false

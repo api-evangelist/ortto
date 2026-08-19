@@ -1,0 +1,153 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/ortto-mcp.yml (tool list from help.ortto.com/a-910-ortto-mcp) bound against
+  openapi/*.yml operationIds in this repo
+description: >-
+  Binds each Ortto MCP tool to the REST operation(s) that back it. The binding
+  is deliberately conservative: Ortto's MCP server is not a generated wrapper
+  over the public REST API, it is a separate agent surface built for reporting
+  and content work. Only three of the twenty tools have a clean counterpart in
+  the REST operations captured in this repo, and every one of those is a
+  partial match rather than a 1:1 wrapper — the MCP tools are read-shaped
+  (list/filter/paginate) while the REST endpoints they resemble are POST-bodied
+  query calls. Sixteen tools have no public REST counterpart at all: reports,
+  schema, brand book, assets and knowledge base are either documented outside
+  the operations captured here or exposed only through the MCP surface. The
+  reverse gap is just as sharp: every write path in the REST API (person merge,
+  person delete, account merge, activity create, transactional email and SMS)
+  is absent from the MCP tool list, so an agent on MCP alone cannot mutate
+  contacts or send messages.
+surfaces:
+  openapi:
+    files:
+    - openapi/ortto-people-api-openapi.yml
+    - openapi/ortto-accounts-api-openapi.yml
+    - openapi/ortto-activities-api-openapi.yml
+    - openapi/ortto-campaigns-api-openapi.yml
+    - openapi/ortto-tags-api-openapi.yml
+    - openapi/ortto-transactional-api-openapi.yml
+    base: https://api.ap3api.com/v1
+    gated: false
+    note: >-
+      Spec is scaffolded in this repo from Ortto's published help-center API
+      reference; Ortto does not publish a machine-readable OpenAPI itself.
+  graphql:
+    endpoint: null
+    note: Ortto publishes no GraphQL API.
+  mcp:
+    url: https://mcp-api-us.ortto.app/mcp
+    gated: true
+    note: >-
+      403 unauthenticated; tools enumerated from provider documentation, so
+      parameter-level binding cannot be confirmed against live inputSchemas.
+crosswalk:
+- tool: get_contacts
+  category: contacts
+  rest:
+  - getPeople
+  binding: partial
+  confidence: medium
+  note: >-
+    Both retrieve contacts with filtering and pagination. POST /person/get
+    accepts limit/offset/cursor_id/sort_by_field_id/filter; whether the MCP tool
+    exposes the same filter grammar cannot be verified without an authenticated
+    tools/list.
+- tool: get_campaigns
+  category: campaigns
+  rest:
+  - getCampaignCalendar
+  binding: partial
+  confidence: medium
+  note: >-
+    POST /campaign/calendar is the documented "retrieve a list of sent
+    campaigns" operation and takes type/state/folder_id/q/sort_order/limit,
+    which lines up with the tool's described filtering and pagination.
+- tool: get_email_report
+  category: reports
+  rest:
+  - getCampaignReport
+  binding: partial
+  confidence: medium
+  note: >-
+    POST /campaign/reports/get returns a campaign or asset report keyed by
+    campaign_id/asset_id. The MCP tool is scoped to email specifically.
+mcp_only:
+- tool: get_audiences
+  reason: >-
+    Audience listing is documented at help.ortto.com/a-268 but is not among the
+    operations captured in this repo's OpenAPI.
+- tool: get_journey_report
+  reason: No public REST operation for journey reporting in the captured spec.
+- tool: get_journey_shape_report
+  reason: No public REST operation for journey shape reporting in the captured spec.
+- tool: get_sms_report
+  reason: No public REST operation for SMS reporting in the captured spec.
+- tool: get_push_report
+  reason: No public REST operation for push reporting in the captured spec.
+- tool: list_reports
+  reason: >-
+    Custom report listing is documented at help.ortto.com/a-924 but is not in
+    the captured spec.
+- tool: get_report
+  reason: >-
+    Custom report retrieval is documented at help.ortto.com/a-923 but is not in
+    the captured spec.
+- tool: get_schema
+  reason: >-
+    Instance schema retrieval is documented at help.ortto.com/a-797 but is not
+    in the captured spec.
+- tool: get_brand_book
+  reason: Brand book has no documented REST equivalent.
+- tool: create_asset
+  reason: Asset creation has no documented REST equivalent; MCP-only write path.
+- tool: get_asset_html
+  reason: >-
+    Asset HTML retrieval is documented at help.ortto.com/a-801 but is not in the
+    captured spec.
+- tool: update_asset_meta
+  reason: Asset metadata update has no documented REST equivalent.
+- tool: get_index
+  reason: Knowledge base index has no documented REST equivalent.
+- tool: create_category
+  reason: Knowledge base category creation has no documented REST equivalent.
+- tool: create_article_from_html
+  reason: Knowledge base article creation has no documented REST equivalent.
+- tool: move_article
+  reason: Knowledge base article move has no documented REST equivalent.
+- tool: modify_index
+  reason: Knowledge base index modification has no documented REST equivalent.
+rest_only:
+- operationId: mergePeople
+  path: /person/merge
+  reason: No MCP tool creates or updates contacts.
+- operationId: getPeopleByIds
+  path: /person/get-by-ids
+  reason: No MCP tool fetches contacts by id.
+- operationId: deletePeople
+  path: /person/delete
+  reason: No MCP tool deletes contacts.
+- operationId: mergeAccounts
+  path: /accounts/merge
+  reason: No MCP tool creates or updates accounts.
+- operationId: createActivities
+  path: /activities/create
+  reason: No MCP tool emits custom activity events.
+- operationId: getTags
+  path: /tags/get
+  reason: No MCP tool lists tags.
+- operationId: sendTransactionalEmail
+  path: /transactional/send
+  reason: No MCP tool sends transactional email.
+- operationId: sendTransactionalSms
+  path: /transactional/send-sms
+  reason: No MCP tool sends transactional SMS.
+coverage:
+  mcp_tools: 20
+  mcp_tools_bound: 3
+  mcp_only: 17
+  rest_operations: 11
+  rest_operations_bound: 3
+  rest_only: 8
+  binding_rate_mcp: 0.15
+  binding_rate_rest: 0.27

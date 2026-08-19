@@ -1,0 +1,153 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  pub.dev, Maven Central, CocoaPods trunk, Packagist, npm registry metadata
+  endpoints plus the autopilot3 GitHub organization and
+  https://ortto.com/developers/
+description: >-
+  Ortto's first-party client libraries are mobile and commerce SDKs, not REST
+  API wrappers. Ortto publishes no official SDK for its HTTP API (api.ap3api.com
+  /v1) in any language registry; the developer documentation shows raw curl and
+  HTTP examples only. What Ortto does ship is a Flutter plugin family on pub.dev,
+  a native Android push SDK on Maven Central, a native iOS SDK distributed via
+  Swift Package Manager (with a deprecated CocoaPods path), and a Magento 2
+  connector on Packagist. Every entry below was read from the registry metadata
+  endpoint on the generated date. Registry currency is uneven: the Android SDK's
+  last Maven Central release (1.8.7) predates a v1.8.8 tag that exists in the
+  GitHub repository, and the CocoaPods pod is explicitly a maintenance-only path
+  the vendor says will end.
+packages:
+- name: ortto_flutter_sdk
+  registry: pub.dev
+  url: https://pub.dev/packages/ortto_flutter_sdk
+  language: Dart
+  official: true
+  version: 0.6.3
+  published: '2026-03-13'
+  repository: https://github.com/autopilot3/ortto-flutter-sdk
+  install: flutter pub add ortto_flutter_sdk
+  scope: Push and in-app notifications, identity capture
+  note: >-
+    Federated plugin front-end; pubspec homepage is https://ortto.com/, repo is
+    the autopilot3 org, so first-party is unambiguous.
+- name: ortto_flutter_sdk_android
+  registry: pub.dev
+  url: https://pub.dev/packages/ortto_flutter_sdk_android
+  language: Dart
+  official: true
+  version: 0.4.9
+  published: '2026-03-13'
+  repository: https://github.com/autopilot3/ortto-flutter-sdk
+  scope: Android platform implementation of the Flutter plugin
+- name: ortto_flutter_sdk_ios
+  registry: pub.dev
+  url: https://pub.dev/packages/ortto_flutter_sdk_ios
+  language: Dart
+  official: true
+  version: 0.6.2
+  published: '2025-09-04'
+  repository: https://github.com/autopilot3/ortto-flutter-sdk
+  scope: iOS platform implementation of the Flutter plugin
+- name: ortto_flutter_sdk_platform_interface
+  registry: pub.dev
+  url: https://pub.dev/packages/ortto_flutter_sdk_platform_interface
+  language: Dart
+  official: true
+  version: 0.4.0
+  published: '2025-04-21'
+  repository: https://github.com/autopilot3/ortto-flutter-sdk
+  scope: Shared platform interface for the federated Flutter plugin
+- name: com.ortto:androidsdk
+  registry: maven-central
+  url: https://repo1.maven.org/maven2/com/ortto/androidsdk/
+  language: Java/Kotlin
+  official: true
+  version: 1.8.7
+  published: '2025-04-30'
+  repository: https://github.com/autopilot3/ortto-push-android-sdk
+  install: implementation "com.ortto:androidsdk:<version>"
+  scope: Native Android push and in-app notifications (Firebase Cloud Messaging)
+  note: >-
+    Maven Central latest is 1.8.7 (2025-04-30) while the GitHub repository
+    carries a v1.8.8 tag, so the newest tagged code is not the newest artifact a
+    consumer can resolve.
+- name: OrttoSDKCore
+  registry: cocoapods
+  url: https://cocoapods.org/pods/OrttoSDKCore
+  language: Swift
+  official: true
+  version: 1.8.4
+  published: '2025-09-04'
+  repository: https://github.com/autopilot3/ortto-push-ios-sdk
+  scope: Core iOS SDK — identity tracking
+  note: >-
+    CocoaPods distribution is deprecated by Ortto; the repository README states
+    1.9.1 is intended to be the final CocoaPods maintenance release and that
+    Swift Package Manager is the supported path for new integrations. The pod
+    trunk therefore lags the SPM releases.
+- name: ortto-push-ios-sdk
+  registry: swift-package-manager
+  url: https://github.com/autopilot3/ortto-push-ios-sdk
+  language: Swift
+  official: true
+  version: v1.10.0
+  published: '2026-06-28'
+  repository: https://github.com/autopilot3/ortto-push-ios-sdk
+  install: 'Swift Package Manager: https://github.com/autopilot3/ortto-push-ios-sdk'
+  scope: >-
+    Products OrttoSDKCore, OrttoPushMessaging, OrttoPushMessagingFCM,
+    OrttoPushMessagingAPNS
+  note: >-
+    SPM has no central registry metadata endpoint; version and date are read
+    from the GitHub release (v1.10.0, published 2026-06-28), which is the
+    resolvable artifact for SPM consumers.
+- name: ortto/magento2-connector
+  registry: packagist
+  url: https://packagist.org/packages/ortto/magento2-connector
+  language: PHP
+  official: true
+  version: v24.1.0
+  published: '2025-10-13'
+  repository: https://github.com/autopilot3/ortto-magento2-connector
+  install: composer require ortto/magento2-connector
+  scope: Magento 2 / Adobe Commerce extension syncing customers, orders and activities
+third_party:
+- name: react-native-ortto
+  registry: npm
+  url: https://www.npmjs.com/package/react-native-ortto
+  language: JavaScript
+  official: false
+  version: 0.1.16
+  published: '2024-02-27'
+  repository: https://github.com/CarlosKhaTran/react-native-ortto
+  note: >-
+    Community wrapper published from a personal GitHub account, not the
+    autopilot3 organization. Last published 2024-02-27.
+- name: '@pipedream/ortto'
+  registry: npm
+  url: https://www.npmjs.com/package/@pipedream/ortto
+  language: JavaScript
+  official: false
+  version: 0.2.0
+  published: '2026-05-20'
+  note: Pipedream integration components, published by Pipedream not Ortto.
+absent:
+- language: JavaScript/TypeScript
+  note: >-
+    No first-party npm package for the Ortto REST API. Searched the npm registry
+    for "ortto"; only third-party wrappers were returned.
+- language: Python
+  note: 'https://pypi.org/pypi/ortto/json returned 404; no first-party PyPI package.'
+- language: Ruby
+  note: RubyGems search for "ortto" returned no gems.
+- language: Go
+  note: >-
+    The autopilot3 GitHub org contains Go forks of third-party libraries
+    (liquid, nats.go, chargebee-go, langchaingo) used internally, but publishes
+    no Ortto API client module.
+summary:
+  official_count: 8
+  third_party_count: 2
+  rest_api_sdk: false
+  newest_official_release: '2026-06-28'
+  oldest_official_release: '2025-04-21'

@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -9,7 +9,11 @@ hosts:
   hsts: true
   hsts_max_age: 31536000
 - host: help.ortto.com
-  https: false
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  3 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
 - host: api.ap3api.com
   https: true
   tls_version: TLSv1.3
@@ -19,18 +23,18 @@ domains:
 - domain: ortto.com
   dnssec: true
   caa:
-  - 0 issue "sectigo.com"
   - 0 issue "amazon.com"
   - 0 issue "letsencrypt.org"
+  - 0 issue "sectigo.com"
   spf: true
   dmarc: true
   dmarc_policy: reject
 - domain: ap3api.com
   dnssec: true
   caa:
-  - 0 issue "letsencrypt.org"
   - 0 issue "sectigo.com"
   - 0 issue "amazon.com"
+  - 0 issue "letsencrypt.org"
   spf: true
   dmarc: true
   dmarc_policy: reject

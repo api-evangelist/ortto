@@ -1,0 +1,344 @@
+{
+  "item": [
+    {
+      "id": "f2e84307-3d17-4366-8e47-f78ccec17535",
+      "name": "Transactional",
+      "description": {
+        "content": "Send transactional email and SMS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eef713fe-0a51-457f-9a58-908a7ae76477",
+          "name": "Send a transactional email",
+          "request": {
+            "name": "Send a transactional email",
+            "description": {
+              "content": "Sends a transactional email. Set non_transactional to true to send as a marketing email. Up to 5 base64-encoded attachments are supported. A successful request returns a 202 Accepted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactional",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_id\": \"<string>\",\n  \"non_transactional\": \"<boolean>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"fields\": {\n        \"key_0\": 7220.594345615647,\n        \"key_1\": 180\n      }\n    },\n    {\n      \"fields\": {\n        \"key_0\": 6751\n      }\n    }\n  ],\n  \"html_body\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "86a40698-1f97-43ff-88c5-549b462eeba5",
+              "name": "Request received and accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactional",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_id\": \"<string>\",\n  \"non_transactional\": \"<boolean>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"fields\": {\n        \"key_0\": 3399.601517826266\n      }\n    },\n    {\n      \"fields\": {\n        \"key_0\": 6081.544227908485,\n        \"key_1\": 342,\n        \"key_2\": false\n      }\n    }\n  ],\n  \"html_body\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5579ad25-60d4-420a-be08-4f708ee79d5a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactional",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_id\": \"<string>\",\n  \"non_transactional\": \"<boolean>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"fields\": {\n        \"key_0\": 3399.601517826266\n      }\n    },\n    {\n      \"fields\": {\n        \"key_0\": 6081.544227908485,\n        \"key_1\": 342,\n        \"key_2\": false\n      }\n    }\n  ],\n  \"html_body\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"attachments\": [\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"data\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66a30417-f9e8-42e9-b21f-2bd3ff8ddc8f",
+          "name": "Send a transactional SMS",
+          "request": {
+            "name": "Send a transactional SMS",
+            "description": {},
+            "url": {
+              "path": [
+                "transactional",
+                "send-sms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sms_id\": \"<string>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"key_0\": true,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    {\n      \"key_0\": true,\n      \"key_1\": 6943\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "90193c82-0c21-4647-a9f8-2c47ddc86be9",
+              "name": "Request received and accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactional",
+                    "send-sms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sms_id\": \"<string>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cae155be-acb0-4828-af67-245914c01f67",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactional",
+                    "send-sms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sms_id\": \"<string>\",\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"people\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ap3api.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "80f705c9-d4e1-4980-a4c0-cacc35ccdf3c",
+    "name": "Ortto Accounts Transactional API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Ortto (formerly Autopilot), a marketing automation, customer data platform (CDP), and analytics product. The API lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign and asset reports, and send transactional email and SMS. Every request is authenticated with a custom API key supplied in the X-Api-Key header. The default service endpoint is https://api.ap3api.com/v1; customers in Australia or Europe use https://api.au.ap3api.com/v1 or https://api.eu.ap3api.com/v1 respectively.\n\nContact Support:\n Name: Ortto Support",
+      "type": "text/plain"
+    }
+  }
+}

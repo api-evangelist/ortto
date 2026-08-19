@@ -1,0 +1,91 @@
+generated: '2026-08-13'
+method: searched
+source: https://roadmap.ortto.com/changelog
+description: >-
+  Ortto publishes a dated, numbered product changelog on its public roadmap
+  site. Releases are platform-wide and cover the app, integrations and the API
+  together; there is no separate API changelog and no per-endpoint change
+  notes. Entries below are the recent window read from the changelog on
+  2026-08-13. Breaking-change flags are not asserted: Ortto does not label
+  entries as breaking, and nothing in the recent window announces a removed or
+  incompatible API endpoint.
+scheme: numbered product releases (major.minor)
+current_version: '1.30'
+current_date: '2026-05-25'
+api_version: v1
+cadence: roughly every 6-8 weeks
+url: https://roadmap.ortto.com/changelog
+feed: null
+breaking_change_labels: false
+entries:
+- version: '1.30'
+  date: '2026-05-25'
+  highlights:
+  - Journey split shape supports total-count path control
+  - New webhooks
+  - CSV mapping
+  - Microsoft Teams integration
+  - MMS capabilities
+- version: '1.29'
+  date: '2026-03-03'
+  highlights:
+  - Business fields for account-level merge tags
+  - Microsoft Dynamics 365 integration
+  - Option to disable all AI features
+- version: '1.28'
+  date: '2026-01-30'
+  highlights:
+  - Journey conditions based on entry activity triggers
+  - Reusable saved filters
+  - Increased folder nesting levels
+- version: '1.27'
+  date: '2025-12-19'
+  highlights:
+  - Account-based marketing, including account journeys
+  - Ortto MCP server released
+  api_relevant: true
+  note: >-
+    This is the release that introduced the MCP agent surface documented in
+    mcp/ortto-mcp.yml.
+- version: '1.26'
+  date: '2025-11-25'
+  highlights:
+  - Google Cloud Storage integration
+  - Daily and weekly journey summaries
+  - Nine new language translations
+- version: '1.25'
+  date: '2025-10-29'
+  highlights:
+  - Landing pages
+  - Enhanced Salesforce object matching in journey actions
+- version: '1.24'
+  date: '2025-09-15'
+  highlights:
+  - New API report methods
+  - WhatsApp video uploads
+  - Shopify partial fulfillment tracking
+  api_relevant: true
+- version: '1.23'
+  date: '2025-08-04'
+  highlights:
+  - Capture widget scheduling and display hours
+  - Multi-field updates in journeys
+- version: '1.22'
+  date: '2025-06-16'
+  highlights:
+  - '"Organizations" renamed to "Accounts"'
+  - 30-day email view links
+  - Callback scripts
+  api_relevant: true
+  note: >-
+    The Organizations-to-Accounts rename is the one naming change in the window
+    that reaches the API surface. See lifecycle/ortto-lifecycle.yml.
+- version: '1.21'
+  date: '2025-06-02'
+  highlights:
+  - Merge tag support for recipient emails
+  - Dashboard filtering for reports
+summary:
+  entries_captured: 10
+  window: 2025-06-02 to 2026-05-25
+  api_relevant_entries: 3

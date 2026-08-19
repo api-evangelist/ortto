@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: https://ortto.com/security-privacy/
+description: >-
+  Ortto's security and privacy page is its trust surface. It names four
+  compliance programs in a single sentence and lists the platform controls
+  behind them, but it is a marketing page rather than a trust portal: there is
+  no self-service document request flow, no downloadable SOC 2 report, no
+  sub-processor list on the page, and no third-party trust-center host (Vanta,
+  Drata, SafeBase). Audit reports are "available on request".
+trust_center:
+  url: https://ortto.com/security-privacy/
+  status: 200
+  checked: '2026-08-13'
+  platform: first-party page
+  self_service_documents: false
+  report_access: on request
+  quote: Our latest audit reports are available on request
+certifications:
+- name: SOC 2
+  claimed: true
+  self_asserted: true
+  evidence: '"We are GDPR, CCPA, ISO27001^ and SOC2 compliant"'
+  report_public: false
+- name: ISO 27001
+  claimed: true
+  self_asserted: true
+  evidence: Named in the same statement, carrying a footnote marker.
+  report_public: false
+- name: GDPR
+  claimed: true
+  evidence: >-
+    Named in the same statement; dedicated page at https://ortto.com/gdpr/
+    (HTTP 200).
+- name: CCPA
+  claimed: true
+  evidence: Named in the same statement.
+- name: EU-US Data Privacy Framework
+  claimed: true
+  evidence: 'Dedicated page at https://ortto.com/dpf/ (HTTP 200).'
+memberships:
+- name: M3AAWG
+  description: >-
+    Messaging, Malware and Mobile Anti-Abuse Working Group; Ortto describes
+    itself as "a member of anti-abuse organization M3AAWG" and announced the
+    membership on its blog on 2024-12-20.
+controls:
+- two-factor authentication
+- user roles and permissions
+- audit logs
+- single sign-on (SSO) and Okta support
+- multi-region data hosting (EU, USA, Australia, Asia)
+- cookie-tracking opt-in for GDPR
+- Google reCAPTCHA on forms
+- incident reporting with live status updates
+data_residency:
+  regions:
+  - EU
+  - USA
+  - Australia
+  - Asia
+  api_endpoints:
+  - https://api.ap3api.com/v1
+  - https://api.eu.ap3api.com/v1
+  - https://api.au.ap3api.com/v1
+policies:
+  privacy: https://ortto.com/privacy/
+  terms: https://ortto.com/terms/
+  gdpr: https://ortto.com/gdpr/
+  dpf: https://ortto.com/dpf/
+  responsible_disclosure: https://ortto.com/policies/ResponsibleDisclosure.pdf
+  security_txt: https://ortto.com/.well-known/security.txt
+see_also:
+- security/ortto-vulnerability-disclosure.yml
+- conformance/ortto-conformance.yml
+summary:
+  certifications_named: 5
+  reports_downloadable: false
+  third_party_trust_portal: false

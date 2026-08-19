@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Ortto Accounts Campaigns API
+  version: 1.0.0
+  description: Overlay capturing the enhancements API Evangelist derived for this Ortto API. It records
+    provenance (the underlying document is scaffolded from Ortto's help-center reference, not published
+    by Ortto), links the runtime-semantics artifacts in this repository, and annotates every operation
+    with the published rate-limit and error semantics. It adds no endpoints, parameters or schemas that
+    Ortto does not document.
+extends: ortto-campaigns-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/ortto-campaigns-api-openapi.yml
+x-operations:
+- POST /campaign/calendar (getCampaignCalendar)
+- POST /campaign/reports/get (getCampaignReport)
+actions:
+- target: $.info
+  description: Record API Evangelist provenance and the runtime semantics artifacts derived for this API.
+  update:
+    x-api-evangelist:
+      provider: ortto
+      profile: https://apis.io/providers/ortto/
+      generated: '2026-08-13'
+      artifacts:
+        conventions: conventions/ortto-conventions.yml
+        errors: errors/ortto-problem-types.yml
+        rate-limits: rate-limits/ortto-rate-limits.yml
+        authentication: authentication/ortto-authentication.yml
+        lifecycle: lifecycle/ortto-lifecycle.yml
+        data-model: data-model/ortto-data-model.yml
+        mcp: mcp/ortto-mcp.yml
+      source-note: Ortto publishes no machine-readable OpenAPI; this document is scaffolded by API Evangelist
+        from the published help-center API reference at https://help.ortto.com/a-250-api-reference.
+- target: $.info
+  description: Link the human documentation and the contact surface Ortto actually publishes.
+  update:
+    x-documentation: https://help.ortto.com/a-223-developer-guide
+    x-changelog: https://roadmap.ortto.com/changelog
+    x-status-page: https://www.orttostatus.com/
+- target: $.components.securitySchemes.ApiKeyAuth
+  description: Note that the key carries no scopes, no prefix and no test mode, and that repeated auth
+    failures trigger an IP ban.
+  update:
+    x-key-scopes: false
+    x-key-prefix: null
+    x-test-mode: false
+    x-auth-failure-policy: 15 failed-credential requests in 15 seconds triggers a 15-second IP ban.
+    x-docs: https://help.ortto.com/a-107-configuring-a-custom-api-key
+- target: $.paths.*[?(@.operationId)]
+  description: Attach the published rate-limit and error semantics to every operation; Ortto returns no
+    rate-limit headers, only a try-in-seconds field in the 429 body.
+  update:
+    x-rate-limit:
+      plan-based: true
+      professional: 10/s
+      business: 30/s
+      enterprise: 30/s (negotiable)
+      headers: null
+      retry-field: try-in-seconds
+      status: 429
+      source: https://help.ortto.com/a-235-rate-limits
+    x-error-catalog: errors/ortto-problem-types.yml
+    x-idempotent: false

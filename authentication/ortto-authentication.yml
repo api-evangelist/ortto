@@ -1,17 +1,83 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/ortto-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-107-configuring-a-custom-api-key,
+  https://help.ortto.com/a-223-developer-guide, upgraded from the securitySchemes
+  in openapi/*.yml
+docs: https://help.ortto.com/a-107-configuring-a-custom-api-key
+description: >-
+  Ortto authenticates every REST call with a single custom API key sent in the
+  X-Api-Key header. The key is created inside the app (Custom API (advanced) >
+  Get started), is unique to one Ortto account, and carries no user identity —
+  the documentation states keys "do not require or involve any user
+  authentication" and must be treated as a private key. There are no scopes, no
+  per-key permissions, no key prefix and no test-vs-live separation. The one
+  piece of per-key configuration is behavioural rather than authorizational: a
+  default and fallback merge_by field association that determines how person
+  records are matched on write. The MCP server is authenticated separately, with
+  a scoped JWT passed as a query parameter, and is documented in
+  mcp/ortto-mcp.yml.
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+  scopes: false
+  test_mode_keys: false
 schemes:
 - name: ApiKeyAuth
   type: apiKey
   in: header
   parameter: X-Api-Key
-  description: Custom private API key configured in Ortto under Settings, supplied on every
-    request in the X-Api-Key header.
+  description: >-
+    Custom private API key created in the Ortto app, unique to a single Ortto
+    account, supplied on every request in the X-Api-Key header.
+  prefix: null
+  rotation: >-
+    Keys can be disconnected at any time through the Ortto user interface; no
+    programmatic rotation endpoint is documented.
+  per_key_config:
+  - name: merge_by
+    description: >-
+      Default and fallback field association used to match existing person
+      records; overridable per request on merge calls.
+    source: https://help.ortto.com/a-299-data-source-merge-strategies
   sources:
-  - openapi/ortto-openapi.yml
+  - https://help.ortto.com/a-107-configuring-a-custom-api-key
+  - openapi/ortto-accounts-api-openapi.yml
+  - openapi/ortto-activities-api-openapi.yml
+  - openapi/ortto-campaigns-api-openapi.yml
+  - openapi/ortto-people-api-openapi.yml
+  - openapi/ortto-tags-api-openapi.yml
+  - openapi/ortto-transactional-api-openapi.yml
+- name: MCPScopedKey
+  type: apiKey
+  in: query
+  parameter: jwt
+  surface: mcp
+  description: >-
+    Scoped JWT minted in the Ortto app under CDP > Data sources > MCP data
+    source and appended to the MCP endpoint URL. Applies only to the MCP server,
+    not to the REST API.
+  sources:
+  - https://help.ortto.com/a-910-ortto-mcp
+  - mcp/ortto-mcp.yml
+failure_modes:
+- status: 401
+  meaning: Authentication failed or the user does not have permissions.
+- status: 403
+  meaning: Authenticated but not authorized for the resource.
+- note: >-
+    15 failed-credential requests within 15 seconds triggers a 15-second IP ban.
+    See rate-limits/ortto-rate-limits.yml.
+app_login:
+  sso: true
+  okta: true
+  two_factor: true
+  note: >-
+    SSO, Okta and 2FA secure human login to the Ortto app; they do not apply to
+    API authentication.
+  source: https://ortto.com/security-privacy/

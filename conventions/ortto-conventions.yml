@@ -1,0 +1,160 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-223-developer-guide,
+  https://help.ortto.com/a-258-retrieve-one-or-more-people-get,
+  https://help.ortto.com/a-107-configuring-a-custom-api-key,
+  https://help.ortto.com/a-714-api-error-responses,
+  https://help.ortto.com/a-235-rate-limits, derived against openapi/*.yml
+description: >-
+  Cross-cutting runtime semantics for the Ortto REST API. The API is an
+  RPC-over-POST design: nearly every operation is a POST to a verb-shaped path
+  (/person/merge, /person/get, /activities/create) carrying a JSON body, rather
+  than a resource-oriented REST surface with GET/PUT/DELETE. Pagination is
+  offset-based with an optional cursor, filtering uses a documented operator
+  grammar, and record matching is governed by a per-key merge strategy rather
+  than by client-supplied idempotency keys.
+auth:
+  style: api-key
+  header: X-Api-Key
+  scope: >-
+    A custom API key is unique to a single Ortto account and is created in the
+    app under Custom API (advanced). Keys carry no user identity and no
+    documented per-key permission scopes.
+  environments:
+    test_mode: false
+    note: No test-vs-live key separation is documented.
+  see_also: authentication/ortto-authentication.yml
+base_urls:
+  default: https://api.ap3api.com/v1
+  regional:
+  - region: au
+    url: https://api.au.ap3api.com/v1
+  - region: eu
+    url: https://api.eu.ap3api.com/v1
+  note: >-
+    The region is a property of the customer's Ortto instance; calls must go to
+    the endpoint matching the account's data-residency region.
+versioning:
+  style: path
+  current: v1
+  pattern: 'https://api{.region}.ap3api.com/v1/'
+  header_negotiation: false
+  note: >-
+    Product releases are versioned separately (1.21 … 1.30) and published on the
+    changelog; the HTTP API path version has remained v1 across them. See
+    changelog/ortto-changelog.yml and lifecycle/ortto-lifecycle.yml.
+request:
+  method: POST
+  content_type: application/json
+  note: >-
+    Read operations are also POSTs with a JSON body (POST /person/get, POST
+    /tags/get, POST /campaign/calendar), so they cannot be cached or expressed
+    as a URL an agent can simply GET.
+pagination:
+  style: offset-with-cursor
+  request_fields:
+  - name: limit
+    type: integer
+    default: 50
+    minimum: 1
+    maximum: 500
+  - name: offset
+    type: integer
+    default: 0
+  - name: cursor_id
+    type: string
+    description: >-
+      UUID returned by the previous page; an alternative to offset for stable
+      deep pagination.
+  response_fields:
+  - name: has_more
+    description: Boolean indicating whether a subsequent page exists.
+  - name: next_offset
+    description: Integer to use as the offset of the next request.
+  - name: cursor_id
+    description: Cursor to pass on the next request.
+  - name: offset
+    description: The offset that was applied to this request.
+  - name: meta
+    description: >-
+      Object carrying total_contacts, total_accounts, total_matches and
+      total_subscribers.
+  source: https://help.ortto.com/a-258-retrieve-one-or-more-people-get
+sorting:
+  fields:
+  - name: sort_by_field_id
+    description: The person field id to sort by.
+  - name: sort_order
+    values:
+    - asc
+    - desc
+    default: desc
+    note: Only applied when sort_by_field_id is set.
+filtering:
+  style: operator-object
+  field: filter
+  operators_documented:
+  - $str::is
+  - $has_any_value
+  - $and
+  - $or
+  note: >-
+    Filters are objects keyed by field id combined with condition operators; the
+    same grammar backs audiences in the Ortto app.
+field_selection:
+  field: fields
+  description: >-
+    Requests name the person/account field ids to return (e.g. on
+    /person/get-by-ids), so responses are sparse by default rather than full
+    records.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Ortto documents no Idempotency-Key header and no request-deduplication
+    token. Repeat-safety on writes comes instead from merge semantics: merge
+    operations match an existing record using the key's configured merge_by
+    field (with a fallback association) and update it in place rather than
+    creating a duplicate, so /person/merge and /accounts/merge are effectively
+    idempotent on the merge key. /activities/create and the transactional send
+    endpoints have no such protection — a retried call re-sends. On the outbound
+    webhook side Ortto explicitly tells consumers to de-duplicate themselves
+    using campaign_id + contact_id + run_id, which is an admission that
+    at-least-once delivery is the contract.
+  merge_by:
+    description: >-
+      Configured per API key (default plus fallback field association), and
+      overridable per request via the merge_by member on merge calls.
+    source: https://help.ortto.com/a-299-data-source-merge-strategies
+async:
+  field: async
+  description: >-
+    Large merge batches can set async so Ortto queues processing rather than
+    handling the batch inline.
+tracing:
+  request_id:
+    location: response body
+    field: request_id
+    description: >-
+      Observed on live error responses from api.ap3api.com; quote it when
+      contacting support.
+    header: null
+errors:
+  envelope: vendor-json
+  rfc9457: false
+  see_also: errors/ortto-problem-types.yml
+rate_limits:
+  signalling:
+    status: 429
+    headers: none
+    body_field: try-in-seconds
+    note: >-
+      No X-RateLimit-* or RFC 9331 RateLimit-* headers are documented or
+      observed; the retry delay is only available by parsing the JSON body.
+  see_also: rate-limits/ortto-rate-limits.yml
+batching:
+  people_per_request: 100
+  activities_per_request: 100
+  payload_max_bytes: 2097152
+  activity_max_bytes: 16384

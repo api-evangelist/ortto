@@ -1,0 +1,198 @@
+{
+  "item": [
+    {
+      "id": "0c1af6e2-ada3-4660-8f25-cb7c9c8d50fa",
+      "name": "Activities",
+      "description": {
+        "content": "Send custom activity events and manage activity definitions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7ee5240b-bd9a-4487-8e37-a3dc1ef5cc1f",
+          "name": "Create one or more custom activity events",
+          "request": {
+            "name": "Create one or more custom activity events",
+            "description": {
+              "content": "Sends up to 100 custom activity events in a single payload (max 2 MB). Each activity references a custom activity definition and may create or update the associated person via merge_by or person_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "activities",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activities\": [\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": 7009.813371404652,\n        \"key_1\": 407\n      },\n      \"fields\": {\n        \"key_0\": 1294,\n        \"key_1\": 3545\n      },\n      \"location\": {\n        \"key_0\": 6322\n      }\n    },\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": 307.71589660139267,\n        \"key_1\": true\n      },\n      \"fields\": {\n        \"key_0\": \"string\",\n        \"key_1\": 8340.78737920318\n      },\n      \"location\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ],\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "480ff90c-511e-4d20-8ddc-b34e9d2866ce",
+              "name": "Activities accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activities",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activities\": [\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": 9858.572823860497\n      },\n      \"fields\": {\n        \"key_0\": 1233,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"location\": {\n        \"key_0\": \"string\",\n        \"key_1\": 5325.292412401823\n      }\n    },\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": false\n      },\n      \"fields\": {\n        \"key_0\": false\n      },\n      \"location\": {\n        \"key_0\": false,\n        \"key_1\": 7040\n      }\n    }\n  ],\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85462fbf-b2ec-4801-8602-bc32a3301484",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activities",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activities\": [\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": 9858.572823860497\n      },\n      \"fields\": {\n        \"key_0\": 1233,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"location\": {\n        \"key_0\": \"string\",\n        \"key_1\": 5325.292412401823\n      }\n    },\n    {\n      \"activity_id\": \"<string>\",\n      \"person_id\": \"<string>\",\n      \"attributes\": {\n        \"key_0\": false\n      },\n      \"fields\": {\n        \"key_0\": false\n      },\n      \"location\": {\n        \"key_0\": false,\n        \"key_1\": 7040\n      }\n    }\n  ],\n  \"merge_by\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ap3api.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "023fc043-5120-4856-9eaf-b002feaf89b5",
+    "name": "Ortto Accounts Activities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Ortto (formerly Autopilot), a marketing automation, customer data platform (CDP), and analytics product. The API lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign and asset reports, and send transactional email and SMS. Every request is authenticated with a custom API key supplied in the X-Api-Key header. The default service endpoint is https://api.ap3api.com/v1; customers in Australia or Europe use https://api.au.ap3api.com/v1 or https://api.eu.ap3api.com/v1 respectively.\n\nContact Support:\n Name: Ortto Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://help.ortto.com/a-714-api-error-responses and
+  https://help.ortto.com/a-235-rate-limits, cross-checked against the 401
+  responses declared in openapi/*.yml
+format: vendor-json
+rfc9457: false
+description: >-
+  Ortto publishes a single flat error reference covering every status code the
+  API can return. Errors are returned as a JSON body, not as RFC 9457
+  application/problem+json — no `type`, `title`, `status`, `detail`, `instance`
+  members are documented. The rate-limit response is the only one whose body
+  shape is documented in detail: it carries an error code of "rate-limit", a
+  human-readable message, and a "try-in-seconds" field telling the client how
+  long to wait. Live 4xx responses observed while probing api.ap3api.com return
+  a JSON envelope with `request_id`, `code` and `error` members, which is the de
+  facto error shape.
+envelope:
+  content_type: application/json
+  observed_fields:
+  - name: request_id
+    description: >-
+      Server-generated identifier for the request, useful when contacting
+      support. Observed on live 400 responses from api.ap3api.com.
+  - name: code
+    description: Numeric HTTP status repeated in the body.
+  - name: error
+    description: Human-readable error message.
+  observed_example_source: 'live probe of https://api.ap3api.com/v1/ (HTTP 400), 2026-08-13'
+  documented_rate_limit_fields:
+  - name: error code
+    value: rate-limit
+  - name: message
+    description: Descriptive message.
+  - name: try-in-seconds
+    description: Seconds the client should wait before retrying.
+problem_types:
+- status: 400
+  title: Bad Request
+  meaning: The request could not be understood or was missing required parameters.
+  remediation: Verify the request structure and that all required fields are present.
+- status: 401
+  title: Unauthorized
+  meaning: Authentication failed or the user does not have permissions.
+  remediation: >-
+    Verify the API key and that it is sent in the X-Api-Key header. Declared on
+    every operation in this repo's OpenAPI.
+  in_openapi: true
+- status: 403
+  title: Forbidden
+  meaning: >-
+    Authentication succeeded, but the authenticated user does not have access to
+    the resource.
+  remediation: Check account status and user authorization.
+- status: 404
+  title: Unknown endpoint or method
+  meaning: The requested resource could not be found.
+  remediation: Verify the endpoint path and that required call body information is present.
+- status: 405
+  title: Method Not Allowed
+  meaning: The requested method is not supported for the specified resource.
+  remediation: Use the documented HTTP method — the Ortto API is POST-only for most operations.
+- status: 406
+  title: Not Acceptable
+  meaning: >-
+    The server cannot produce a response matching the acceptable values in the
+    request headers.
+  remediation: Adjust Accept and Content-Type request headers.
+- status: 408
+  title: Request Timeout
+  meaning: The server timed out waiting for the request.
+  remediation: Retry the request, or contact support if it persists.
+- status: 409
+  title: Conflict
+  meaning: The request could not be completed due to a conflict.
+  remediation: Contact support for field-creation conflicts.
+- status: 410
+  title: Gone
+  meaning: The requested resource is no longer available.
+  remediation: Verify the resource has not been deleted.
+- status: 429
+  title: Too Many Requests
+  meaning: Rate limiting has been applied.
+  remediation: >-
+    Back off for the number of seconds given in the try-in-seconds field. See
+    rate-limits/ortto-rate-limits.yml.
+  retryable: true
+  see_also: rate-limits/ortto-rate-limits.yml
+- status: 500
+  title: Internal Server Error
+  meaning: The server has encountered an unexpected error.
+  remediation: Contact support with the request_id.
+  retryable: true
+- status: 501
+  title: Not Implemented
+  meaning: The request method is not supported by the server.
+  remediation: Use a supported method.
+- status: 502
+  title: Bad Gateway
+  meaning: Invalid response from an upstream server.
+  remediation: Retry, or contact support if it persists.
+  retryable: true
+- status: 503
+  title: Service Unavailable
+  meaning: The server is not ready to handle the request.
+  remediation: Retry later; check https://www.orttostatus.com/.
+  retryable: true
+- status: 504
+  title: Gateway Timeout
+  meaning: No timely response from an upstream server.
+  remediation: Retry the request.
+  retryable: true
+- status: 507
+  title: Insufficient Storage
+  meaning: Unable to complete the request due to storage limits.
+  remediation: Review the account's contact limits and plan allowance.
+summary:
+  documented_statuses: 16
+  rfc9457: false
+  error_code_vocabulary: partial
+  note: >-
+    Ortto documents statuses exhaustively but publishes no machine-readable
+    catalog of application-level error codes; "rate-limit" is the only string
+    error code named in the documentation.

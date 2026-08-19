@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://roadmap.ortto.com/changelog, https://roadmap.ortto.com/feature-requests,
+  https://www.orttostatus.com/, https://help.ortto.com/a-223-developer-guide,
+  https://ortto.com/terms/, derived against openapi/*.yml
+description: >-
+  Ortto runs a product-release lifecycle rather than an API lifecycle. Numbered
+  releases (1.21 through 1.30) ship roughly every six to eight weeks with a
+  dated public changelog and a public feature-request board, and a Statuspage
+  instance publishes real-time and historical availability. What is missing is
+  API-specific: there is no published API deprecation policy, no Sunset or
+  Deprecation response headers (RFC 8594), no version-support window, and no
+  API-level SLA outside enterprise contracts. The HTTP path version has stayed
+  v1 across every release captured here. One renaming event is documented and
+  visible in the surface: "Organizations" became "Accounts" in release 1.22
+  (June 2025), and the API reference still carries both spellings.
+versioning:
+  api_version: v1
+  style: path
+  product_releases: numbered (1.21 … 1.30)
+  changelog: https://roadmap.ortto.com/changelog
+  see_also: changelog/ortto-changelog.yml
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notice_period: null
+  note: >-
+    No API deprecation or sunset policy is published. Deprecations that do occur
+    are announced in the product changelog prose, not in response headers or a
+    dated policy.
+  deprecated_operations: []
+  deprecated_operations_note: >-
+    No operation in openapi/*.yml carries deprecated: true.
+renames:
+- from: Organizations
+  to: Accounts
+  release: '1.22'
+  date: '2025-06-16'
+  source: https://help.ortto.com/a-885-organizations-is-now-accounts
+  note: >-
+    The /accounts/merge endpoint is the current spelling; help-center articles
+    for "retrieve one or more organizations" remain published under the old
+    name.
+distribution_deprecations:
+- surface: iOS SDK CocoaPods distribution
+  status: deprecated
+  note: >-
+    Ortto states Swift Package Manager is the supported path for new
+    integrations and that 1.9.1 is intended to be the final CocoaPods
+    maintenance release.
+  source: https://github.com/autopilot3/ortto-push-ios-sdk
+status_page:
+  url: https://www.orttostatus.com/
+  platform: statuspage.io
+  machine_readable: https://www.orttostatus.com/api/v2/summary.json
+  probe:
+    url: https://www.orttostatus.com/api/v2/summary.json
+    status: 200
+    checked: '2026-08-13'
+  history: true
+roadmap:
+  url: https://roadmap.ortto.com/
+  feature_requests: https://roadmap.ortto.com/feature-requests
+sla:
+  published: false
+  note: >-
+    No public API SLA. Uptime commitments, if any, sit in enterprise agreements;
+    the terms of service at https://ortto.com/terms/ is the only public
+    contractual document.
+support:
+  help_center: https://help.ortto.com/
+  contact: mailto:help@ortto.com
+corporate:
+- event: Ortto announced it is joining Canva
+  date: '2026-04-08'
+  source: https://ortto.com/blog/ortto-is-joining-canva
+  note: >-
+    Recorded because an acquisition is a lifecycle signal for API consumers. No
+    change to API availability, endpoints or the v1 path has been announced as
+    of 2026-08-13.

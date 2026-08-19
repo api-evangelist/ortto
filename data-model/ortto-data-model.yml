@@ -1,0 +1,213 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/ortto-openapi.yml and openapi/*.yml, enriched from
+  https://help.ortto.com/a-205-system-person-fields,
+  https://help.ortto.com/a-797-retrieve-account-instance-schema-via-api,
+  https://help.ortto.com/a-258-retrieve-one-or-more-people-get
+description: >-
+  Entity graph for the Ortto CDP, derived from the operations and schemas in
+  this repo's OpenAPI. The model is deliberately shallow by design: Ortto does
+  not expose typed resource objects with nested $refs, it exposes a Person and
+  an Account whose attributes are a flat map of field ids (`fields`) resolved
+  against the instance schema at runtime. That means the real shape of a Person
+  is account-specific and only knowable by calling the schema endpoint — the
+  spec cannot describe it, and neither can this artifact. Relationships below
+  are the ones the API actually expresses through id-reference fields, not an
+  idealized CRM model.
+entities:
+- name: Person
+  aliases:
+  - Contact
+  description: >-
+    The core CDP record. Attributes are a map of field ids to values rather than
+    named properties; system field ids are documented separately.
+  identifier: contact_id
+  id_field_note: >-
+    Returned as `id` on contact objects and referenced as `contact_id` on
+    webhook payloads and activity feeds.
+  schemas:
+  - PersonInput
+  - PersonMergeRequest
+  - PersonMergeResponse
+  - PersonGetRequest
+  - PersonGetResponse
+  operations:
+  - mergePeople
+  - getPeople
+  - getPeopleByIds
+  - deletePeople
+  attributes:
+  - name: fields
+    type: object
+    description: Map of field ids to values; shape is per-instance.
+  - name: location
+    type: object
+  - name: tags
+    type: array
+  - name: unset_tags
+    type: array
+  matching:
+    fields:
+    - merge_by
+    - merge_strategy
+    - find_strategy
+    description: >-
+      Records are matched on up to 3 field ids supplied in merge_by, with
+      merge_strategy (1 append only, 2 overwrite, 3 ignore) and find_strategy
+      (0 any, 1 sequential, 2 all) governing the write.
+- name: Account
+  aliases:
+  - Organization
+  description: >-
+    Company/organization record, renamed from "Organization" in release 1.22.
+    Same field-map shape as Person.
+  identifier: account_id
+  operations:
+  - mergeAccounts
+  attributes:
+  - name: accounts
+    type: array
+  - name: merge_by
+    type: array
+  - name: merge_strategy
+    type: integer
+- name: Activity
+  description: >-
+    A custom or system event attributed to a Person (or, since release 1.27, an
+    Account). Activities carry an activity definition id and an attribute
+    payload.
+  operations:
+  - createActivities
+  attributes:
+  - name: activities
+    type: array
+  - name: merge_by
+    type: array
+  constraints:
+    max_per_request: 100
+    max_bytes_each: 16384
+    max_per_contact_per_day: 50
+    backdate_window_days: 90
+- name: Tag
+  description: Free-form label applied to People and Accounts.
+  operations:
+  - getTags
+  attributes:
+  - name: q
+    type: string
+    description: Search query for the tag list.
+- name: Campaign
+  description: >-
+    An email, SMS, push, journey or playbook campaign. Retrieved through the
+    calendar operation and reported on by id.
+  identifier: campaign_id
+  operations:
+  - getCampaignCalendar
+  - getCampaignReport
+  attributes:
+  - name: type
+  - name: state
+  - name: folder_id
+- name: Asset
+  description: >-
+    A message asset within a campaign — the email or SMS body. Reports can be
+    fetched per asset, and the MCP surface can create and update assets.
+  identifier: asset_id
+  operations:
+  - getCampaignReport
+  note: >-
+    Asset create/update exists only on the MCP surface (create_asset,
+    get_asset_html, update_asset_meta), not in the public REST operations
+    captured here. See mcp/ortto-tool-crosswalk.yml.
+- name: TransactionalMessage
+  description: >-
+    A transactional email or SMS send request, addressed to people resolved by
+    merge_by.
+  operations:
+  - sendTransactionalEmail
+  - sendTransactionalSms
+  attributes:
+  - name: email_id
+  - name: sms_id
+  - name: non_transactional
+  - name: html_body
+  - name: subject
+  - name: attachments
+- name: Audience
+  description: >-
+    A saved, filter-defined set of People. Documented in the help center and
+    exposed as an MCP tool (get_audiences); no operation for it is captured in
+    this repo's OpenAPI.
+  in_openapi: false
+- name: Field
+  description: >-
+    A person, account or activity attribute definition. The set of field ids is
+    per-instance and retrievable via the instance schema.
+  in_openapi: false
+  source: https://help.ortto.com/a-797-retrieve-account-instance-schema-via-api
+relationships:
+- from: Person
+  to: Account
+  type: belongs_to
+  via: account association (organization membership)
+  note: >-
+    Documented as a product concept (adding and removing people from accounts);
+    the association is not expressed as a field in the captured OpenAPI.
+  confidence: medium
+- from: Person
+  to: Activity
+  type: has_many
+  via: contact_id on the activity
+  confidence: high
+- from: Account
+  to: Activity
+  type: has_many
+  via: account custom activity events
+  confidence: medium
+  source: https://help.ortto.com/a-890-create-an-account-custom-activity-event-create
+- from: Person
+  to: Tag
+  type: has_many
+  via: tags / unset_tags on PersonInput
+  confidence: high
+- from: Account
+  to: Tag
+  type: has_many
+  via: tagging and untagging organizations
+  confidence: medium
+- from: Campaign
+  to: Asset
+  type: has_many
+  via: asset_id on the report request
+  confidence: high
+- from: Campaign
+  to: Person
+  type: has_many
+  via: campaign_id + contact_id on webhook and report payloads
+  confidence: high
+- from: Person
+  to: Audience
+  type: has_many
+  via: audience subscription
+  confidence: medium
+- from: Person
+  to: Field
+  type: has_many
+  via: fields map keyed by field id
+  confidence: high
+id_conventions:
+  prefixes: none
+  format: >-
+    Opaque strings. cursor_id values are documented as UUID-shaped (e.g.
+    00609c898a4490c5800a5453). No typed id prefixes (cus_, camp_) are used.
+summary:
+  entities: 9
+  entities_in_openapi: 7
+  relationships: 9
+  typed_schemas_in_spec: 8
+  note: >-
+    The spec's schemas describe request and response envelopes, not resource
+    objects; there is no reusable Person or Account component to $ref, which is
+    why the relationship graph is derived from id-reference fields and
+    documentation rather than from $ref edges.

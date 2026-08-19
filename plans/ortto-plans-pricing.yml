@@ -4,8 +4,31 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Ortto
 providerId: ortto
 created: '2026-06-25'
-modified: '2026-06-25'
-reconciled: true
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://ortto.com/pricing/ (captured 2026-06-25; returns HTTP 404 as of
+  2026-08-13), https://help.ortto.com/a-235-rate-limits,
+  https://help.ortto.com/a-199-unified-ortto-account-plans,
+  https://help.ortto.com/a-39-14-day-trial-plans
+reconciled: false
+plan_count: 5
+pricing_page_status:
+  url: https://ortto.com/pricing/
+  status: 404
+  checked: '2026-08-13'
+  note: >-
+    Ortto has taken its public pricing page down. https://ortto.com/pricing/,
+    /pricing, /plans and /plans/ all return the site's 404 shell, and no pricing
+    URL appears in https://ortto.com/pages-sitemap.xml (508 URLs). The help
+    center confirms tier names but publishes no prices: a-199 states plan
+    inclusions and limits vary by account and directs customers to Account
+    settings. The prices below are the values captured from the live pricing
+    page on 2026-06-25 and could NOT be re-verified on this pass — treat them as
+    historical. Tier names Professional, Business and Enterprise remain
+    independently confirmed by the rate-limit reference, which sets per-second
+    API request ceilings by plan.
 tags:
 - Marketing Automation
 - CDP

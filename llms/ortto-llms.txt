@@ -1,0 +1,84 @@
+# Ortto
+
+> Ortto (formerly Autopilot) is a marketing automation, customer data platform (CDP) and analytics product. Its REST API creates and updates people/contacts and accounts, sends custom activity events, manages tags, retrieves campaign reports, and sends transactional email and SMS. Ortto also runs a first-party hosted MCP server for agent access. Ortto announced on 2026-04-08 that it is joining Canva.
+
+<!--
+generated: 2026-08-13
+method: generated
+source: apis.yml plus the artifacts in this repository. Ortto publishes no llms.txt of its own — https://ortto.com/llms.txt returns HTTP 404 and https://help.ortto.com/llms.txt returns HTTP 404 (checked 2026-08-13). This file is written by API Evangelist and is not a provider-published document.
+-->
+
+## How to call the API
+
+- Base URL: https://api.ap3api.com/v1 (default)
+- Regional base URLs: https://api.au.ap3api.com/v1 (Australia), https://api.eu.ap3api.com/v1 (Europe). Use the endpoint that matches the account's data-residency region.
+- Authentication: custom API key in the `X-Api-Key` header. One key per Ortto account, no scopes, no test mode. Create it in the app under Custom API (advanced).
+- Transport: almost every operation is a `POST` with a JSON body, including reads (`POST /person/get`, `POST /tags/get`, `POST /campaign/calendar`). There are no cacheable GET URLs.
+- Pagination: `limit` (default 50, max 500), `offset`, optional `cursor_id`. Responses carry `has_more`, `next_offset`, `offset` and a `meta` object of totals.
+- Errors: vendor JSON, not RFC 9457. Live error bodies carry `request_id`, `code` and `error`.
+- Rate limits: 10 req/sec on Professional, 30 req/sec on Business and Enterprise, plus 2,000 requests per 10s and 6,000 per 60s per IP. On 429 the body carries `try-in-seconds`; there are no RateLimit-* headers and no Retry-After.
+- Idempotency: no Idempotency-Key header. Merge operations are idempotent on the configured `merge_by` field; activity creation and transactional sends are not.
+
+## Operations
+
+- `POST /person/merge` (mergePeople) — create or update up to 100 people; `merge_by`, `merge_strategy`, `find_strategy`, `async`.
+- `POST /person/get` (getPeople) — retrieve people with `filter`, `limit`, `offset`, `cursor_id`, `sort_by_field_id`, `sort_order`.
+- `POST /person/get-by-ids` (getPeopleByIds) — retrieve people by `contact_ids`, selecting `fields`.
+- `POST /person/delete` (deletePeople) — delete people.
+- `POST /accounts/merge` (mergeAccounts) — create or update accounts (formerly "organizations").
+- `POST /activities/create` (createActivities) — send up to 100 custom activity events; 2 MB payload, 16 kB per activity, 50 events per activity per contact per 24h, backdating up to 90 days.
+- `POST /tags/get` (getTags) — retrieve account tags.
+- `POST /campaign/calendar` (getCampaignCalendar) — list campaigns by `type`, `state`, `folder_id`, `q`, `sort_order`, `limit`.
+- `POST /campaign/reports/get` (getCampaignReport) — retrieve a campaign or asset report by `campaign_id` / `asset_id`.
+- `POST /transactional/send` (sendTransactionalEmail) — send a transactional email; returns 202.
+- `POST /transactional/send-sms` (sendTransactionalSms) — send a transactional SMS; returns 202.
+
+## Agent access (MCP)
+
+Ortto ships a hosted remote MCP server, released in version 1.27 (2025-12-19). No local install is required.
+
+- US: https://mcp-api-us.ortto.app/mcp?jwt=<scoped-key>
+- EU: https://mcp-api-eu.ortto.app/mcp?jwt=<scoped-key>
+- AU: https://mcp-api-au.ortto.app/mcp?jwt=<scoped-key>
+
+Authentication is a scoped JWT minted in the Ortto app under CDP > Data sources > MCP data source and passed as the `jwt` query parameter. The server is not OAuth-protected.
+
+Twenty tools: `get_campaigns`, `get_contacts`, `get_audiences`, `get_email_report`, `get_journey_report`, `get_journey_shape_report`, `get_sms_report`, `get_push_report`, `list_reports`, `get_report`, `get_schema`, `get_brand_book`, `create_asset`, `get_asset_html`, `update_asset_meta`, `get_index`, `create_category`, `create_article_from_html`, `move_article`, `modify_index`.
+
+Note for agents: the MCP surface is read-heavy. It cannot create or update contacts, emit activities, or send messages — those live only on the REST API. Conversely, reports, schema, brand book, assets and knowledge-base tools have no counterpart in the REST operations captured here.
+
+## Events
+
+Outbound webhooks only, configured inside journeys, playbooks and activities. There is no AsyncAPI document and no API to manage webhook subscriptions. Payloads are unsigned — no HMAC, no signing secret — and delivery is at-least-once: Ortto instructs consumers to de-duplicate on `campaign_id` + `contact_id` + `run_id`. Failed deliveries retry up to 12 times over escalating intervals from 5 minutes to 1 day; 400, 401, 403, 404 and 405 are not retried.
+
+## Client libraries
+
+Ortto publishes no REST API SDK in any language. First-party libraries are mobile and commerce only:
+
+- Flutter: `ortto_flutter_sdk` (pub.dev, 0.6.3, 2026-03-13)
+- Android: `com.ortto:androidsdk` (Maven Central, 1.8.7, 2025-04-30)
+- iOS: https://github.com/autopilot3/ortto-push-ios-sdk via Swift Package Manager (v1.10.0, 2026-06-28); CocoaPods is deprecated
+- Magento 2: `ortto/magento2-connector` (Packagist, v24.1.0, 2025-10-13)
+
+Web tracking is an embedded script exposing a global `ap3c` object with `track()`, `activity()`, `getCookie()` and `clearSession()`.
+
+## Documentation
+
+- Developer documentation: https://help.ortto.com/a-222-ortto-developer-documentation
+- Developer guide: https://help.ortto.com/a-223-developer-guide
+- API reference: https://help.ortto.com/a-250-api-reference
+- API error responses: https://help.ortto.com/a-714-api-error-responses
+- Rate limits: https://help.ortto.com/a-235-rate-limits
+- MCP: https://help.ortto.com/c-332-ortto-mcp
+- Changelog: https://roadmap.ortto.com/changelog
+- Status: https://www.orttostatus.com/
+- Security and privacy: https://ortto.com/security-privacy/
+- Security contact: https://ortto.com/.well-known/security.txt
+
+## What Ortto does not publish
+
+- No machine-readable OpenAPI. `/openapi.json`, `/openapi.yaml`, `/swagger.json`, `/api-docs`, `/docs` and `/redoc` were probed on api.ap3api.com (403), ortto.com (404) and help.ortto.com (404) on 2026-08-13.
+- No A2A agent card at `/.well-known/agent-card.json` or `/.well-known/agent.json` on any host.
+- No OAuth or OpenID Connect discovery documents.
+- No public pricing page — https://ortto.com/pricing/ returns 404 and no pricing URL appears in the sitemap.
+- No API deprecation policy, Sunset headers, or public SLA.
