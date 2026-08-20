@@ -36,6 +36,17 @@ tags:
 - Email
 - SMS
 - Transactional Email
+- Webhook
+- MCP
+- Push Notifications
+tags_raw:
+- Marketing Automation
+- CDP
+- Customer Data Platform
+- Analytics
+- Email
+- SMS
+- Transactional Email
 - Webhooks
 - MCP
 - Push Notifications
@@ -49,6 +60,8 @@ apis:
   humanURL: https://help.ortto.com/a-250-api-reference
   baseURL: https://api.ap3api.com/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
