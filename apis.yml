@@ -225,6 +225,9 @@ apis:
   - type: Documentation
     url: https://help.ortto.com/a-223-developer-guide
 common:
+- type: CapabilityMap
+  url: capabilities/ortto-capability-edges.yml
+  name: Ortto Business Capability Map
 - type: AgenticAccess
   url: agentic-access/ortto-agentic-access.yml
 - type: VulnerabilityDisclosure
