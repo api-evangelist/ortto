@@ -1,12 +1,7 @@
 {
   "provider": "ortto",
   "sources": [
-    "ortto-accounts-api-openapi.yml",
-    "ortto-activities-api-openapi.yml",
-    "ortto-campaigns-api-openapi.yml",
-    "ortto-people-api-openapi.yml",
-    "ortto-tags-api-openapi.yml",
-    "ortto-transactional-api-openapi.yml"
+    "_original/ortto-openapi.yml"
   ],
   "outputs": [
     "ortto-accounts-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ortto-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "ortto-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ortto-activities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ortto-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ortto-people-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ortto-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ortto-transactional-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

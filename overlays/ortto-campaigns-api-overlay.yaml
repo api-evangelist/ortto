@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for Ortto Accounts Campaigns API
   version: 1.0.0
-  description: Overlay capturing the enhancements API Evangelist derived for this Ortto API. It records
+  x-description: Overlay capturing the enhancements API Evangelist derived for this Ortto API. It records
     provenance (the underlying document is scaffolded from Ortto's help-center reference, not published
     by Ortto), links the runtime-semantics artifacts in this repository, and annotates every operation
     with the published rate-limit and error semantics. It adds no endpoints, parameters or schemas that

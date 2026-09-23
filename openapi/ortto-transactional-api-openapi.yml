@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Ortto Accounts Transactional API
-  description: REST API for Ortto (formerly Autopilot), a marketing automation, customer data platform (CDP), and analytics product. The API lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign and asset reports, and send transactional email and SMS. Every request is authenticated with a custom API key supplied in the X-Api-Key header. The default service endpoint is https://api.ap3api.com/v1; customers in Australia or Europe use https://api.au.ap3api.com/v1 or https://api.eu.ap3api.com/v1 respectively.
+  title: Ortto Transactional API
+  description: REST API for Ortto (formerly Autopilot), a marketing automation, customer data platform (CDP), and analytics product.
   termsOfService: https://ortto.com/terms-of-service/
   contact:
     name: Ortto Support
@@ -68,7 +68,21 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
     TransactionalSendRequest:
       type: object
       properties:
@@ -107,20 +121,6 @@ components:
                 description: Base64-encoded file contents.
               mime_type:
                 type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
