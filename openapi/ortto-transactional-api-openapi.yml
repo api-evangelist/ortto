@@ -76,13 +76,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
     TransactionalSendRequest:
       type: object
       properties:
@@ -121,6 +114,13 @@ components:
                 description: Base64-encoded file contents.
               mime_type:
                 type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
