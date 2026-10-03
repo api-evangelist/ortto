@@ -68,14 +68,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
     TransactionalSendRequest:
       type: object
       properties:
@@ -114,13 +114,13 @@ components:
                 description: Base64-encoded file contents.
               mime_type:
                 type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

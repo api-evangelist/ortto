@@ -139,6 +139,39 @@ components:
           type: array
           items:
             type: string
+    PersonGetResponse:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        offset:
+          type: integer
+        has_more:
+          type: boolean
+    PersonGetRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sort_by_field_id:
+          type: string
+        sort_order:
+          type: string
+          enum:
+          - asc
+          - desc
+        fields:
+          type: array
+          items:
+            type: string
+        filter:
+          type: object
+          additionalProperties: true
     PersonMergeRequest:
       type: object
       required:
@@ -178,6 +211,13 @@ components:
           description: When true, only updates existing records.
         suppression_list_field_id:
           type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
     PersonMergeResponse:
       type: object
       properties:
@@ -191,46 +231,6 @@ components:
               status:
                 type: string
                 description: e.g. created, updated, or suppressed.
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
-    PersonGetResponse:
-      type: object
-      properties:
-        contacts:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        offset:
-          type: integer
-        has_more:
-          type: boolean
-    PersonGetRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-        offset:
-          type: integer
-        sort_by_field_id:
-          type: string
-        sort_order:
-          type: string
-          enum:
-          - asc
-          - desc
-        fields:
-          type: array
-          items:
-            type: string
-        filter:
-          type: object
-          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
