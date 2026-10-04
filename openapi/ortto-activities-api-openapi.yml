@@ -40,13 +40,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        error:
-          type: string
     ActivitiesCreateRequest:
       type: object
       required:
@@ -75,6 +68,13 @@ components:
           type: array
           items:
             type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.

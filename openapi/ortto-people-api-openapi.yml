@@ -121,24 +121,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    PersonInput:
-      type: object
-      properties:
-        fields:
-          type: object
-          description: Map of field IDs to values for the person.
-          additionalProperties: true
-        location:
-          type: object
-          additionalProperties: true
-        tags:
-          type: array
-          items:
-            type: string
-        unset_tags:
-          type: array
-          items:
-            type: string
     PersonGetResponse:
       type: object
       properties:
@@ -151,27 +133,6 @@ components:
           type: integer
         has_more:
           type: boolean
-    PersonGetRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-        offset:
-          type: integer
-        sort_by_field_id:
-          type: string
-        sort_order:
-          type: string
-          enum:
-          - asc
-          - desc
-        fields:
-          type: array
-          items:
-            type: string
-        filter:
-          type: object
-          additionalProperties: true
     PersonMergeRequest:
       type: object
       required:
@@ -218,6 +179,24 @@ components:
           type: string
         error:
           type: string
+    PersonInput:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Map of field IDs to values for the person.
+          additionalProperties: true
+        location:
+          type: object
+          additionalProperties: true
+        tags:
+          type: array
+          items:
+            type: string
+        unset_tags:
+          type: array
+          items:
+            type: string
     PersonMergeResponse:
       type: object
       properties:
@@ -231,6 +210,27 @@ components:
               status:
                 type: string
                 description: e.g. created, updated, or suppressed.
+    PersonGetRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+        sort_by_field_id:
+          type: string
+        sort_order:
+          type: string
+          enum:
+          - asc
+          - desc
+        fields:
+          type: array
+          items:
+            type: string
+        filter:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API key.
