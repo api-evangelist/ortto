@@ -4,8 +4,11 @@ source:
 - https://n8n.io/integrations/ortto/
 checked:
 - https://composio.dev/toolkits/ortto
+- https://fivetran.com/docs/activations/destinations/available-destinations/ortto
+- https://hightouch.com/docs/destinations/ortto
 - https://monid.ai/tools/ortto
 - https://n8n.io/integrations/ortto/
+- https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-ortto
 - https://zapier.com/apps/ortto/integrations
 summary: null
 marketplace_apps:
@@ -290,5 +293,78 @@ marketplace_apps:
   - zoom
   - zscaler-zia
   - zulip
-edges: []
+edges:
+- partner_name: Twilio Segment
+  partner: segment
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-ortto
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - actions-ortto
+      - autopilotapp
+      status: PUBLIC
+      partner_owned: true
+      connection_modes:
+      - cloud:mobile
+      - cloud:server
+      - cloud:web
+      accepted_methods:
+      - Identify
+      - Track
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/destinations/ortto
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - ortto
+      status: released
+      sync_types:
+      - Audience
+      - Organization
+      - Person
+      sync_modes:
+      - insert
+      - update
+      - upsert
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: Census
+  partner: getcensus
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://fivetran.com/docs/activations/destinations/available-destinations/ortto
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - ortto
+      sync_behaviours:
+      - update only
+      - update or create
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
 templates: []
