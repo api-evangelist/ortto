@@ -11,6 +11,7 @@ checked:
 - https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-ortto
 - https://zapier.com/apps/ortto/integrations
 - okta/integrations/okta-integration-edges.yml
+- stripe/integrations/stripe-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -389,4 +390,21 @@ edges:
   - OKTA_VERIFIED
   features:
   - OIDC
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/ortto
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Ortto
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: marketing
 templates: []

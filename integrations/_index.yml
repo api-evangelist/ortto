@@ -52,3 +52,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: ortto-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: marketing
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/ortto
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
