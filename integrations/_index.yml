@@ -89,5 +89,5 @@
     - connectors/applications/ortto
     vendor_link: https://ortto.com/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
