@@ -4,7 +4,9 @@ source:
 - https://n8n.io/integrations/ortto/
 checked:
 - https://composio.dev/toolkits/ortto
+- https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/activations/destinations/available-destinations/ortto
+- https://fivetran.com/docs/connectors/partner-built-program
 - https://hightouch.com/docs/destinations/ortto
 - https://monid.ai/tools/ortto
 - https://n8n.io/integrations/ortto/
@@ -407,4 +409,30 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: marketing
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: aggregator
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://fivetran.com/docs/connectors/applications/ortto
+  category: null
+  contract_reference:
+    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
+    spec_file: null
+    role: elt-connector:fivetran
+    registered_name: Ortto
+    matched_domain: ortto.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connector_paths:
+    - connectors/applications/ortto
+    vendor_link: https://ortto.com/
+    builder: Fivetran
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
 templates: []
