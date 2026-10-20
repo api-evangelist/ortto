@@ -3,6 +3,8 @@ method: searched
 source:
 - https://n8n.io/integrations/ortto/
 checked:
+- chargebee/integrations/chargebee-integration-edges.yml
+- gorgias/integrations/gorgias-integration-edges.yml
 - https://api.nuget.org/v3
 - https://composio.dev/toolkits/ortto
 - https://crates.io/api/v1
@@ -21,6 +23,7 @@ checked:
 - https://zapier.com/apps/ortto/integrations
 - okta/integrations/okta-integration-edges.yml
 - stripe/integrations/stripe-integration-edges.yml
+- zendesk/integrations/zendesk-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -305,6 +308,36 @@ marketplace_apps:
   - zscaler-zia
   - zulip
 edges:
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.ortto/androidsdk
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.ortto:androidsdk
+      version: 1.8.7
+      released: '2025-04-30'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.ortto/androidsdk
+      repo_leg: github-org:autopilot3
+      publisher_leg: groupId:ortto.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 - partner_name: Twilio Segment
   partner: segment
   partner_match: aggregator
@@ -378,6 +411,65 @@ edges:
       - update or create
   detected_by: sweep-cdp.py
   first_seen: '2026-10-14'
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: aggregator
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://fivetran.com/docs/connectors/applications/ortto
+  category: null
+  contract_reference:
+    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
+    spec_file: null
+    role: elt-connector:fivetran
+    registered_name: Ortto
+    matched_domain: ortto.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connector_paths:
+    - connectors/applications/ortto
+    vendor_link: https://ortto.com/
+    builder: Fivetran
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Chargebee (own)
+  partner: chargebee
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.chargebee.com/apps/['ortto']
+  mirror_of: chargebee/integrations/chargebee-integration-edges.yml
+  apps:
+  - Ortto
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  category: Marketing Automation
+- partner_name: Gorgias (own)
+  partner: gorgias
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.gorgias.com/apps/ortto
+  mirror_of: gorgias/integrations/gorgias-integration-edges.yml
+  apps:
+  - Ortto
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
 - partner_name: Okta (own)
   partner: okta
   partner_match: mirror
@@ -416,60 +508,21 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: marketing
-- partner_name: Fivetran
-  partner: fivetran
-  partner_match: aggregator
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
   type: marketplace
-  marketplace: fivetran-connectors
-  channel: elt-connector
-  relationship: ipaas-bridge
+  relationship: platform-app
   direction: third-party
-  evidence: https://fivetran.com/docs/connectors/applications/ortto
-  category: null
-  contract_reference:
-    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
-    spec_file: null
-    role: elt-connector:fivetran
-    registered_name: Ortto
-    matched_domain: ortto.com
-    matched_by: domain
-    detected_by: sweep-data-integration.py
-    detected: '2026-10-18'
-    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
-    connector_paths:
-    - connectors/applications/ortto
-    vendor_link: https://ortto.com/
-    builder: Fivetran
-  detected_by: sweep-data-integration.py
-  first_seen: '2026-10-18'
-- partner_name: Maven Central
-  partner: maven-central
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (Java/JVM)
-  evidence: https://central.sonatype.com/artifact/com.ortto/androidsdk
-  channel: package-registry
-  relationship: distribution-channel
-  contract_reference:
-    register: Maven Central (public registry JSON)
-    spec_file: null
-    language: Java/JVM
-    packages:
-    - name: com.ortto:androidsdk
-      version: 1.8.7
-      released: '2025-04-30'
-      released_field: lastUpdated
-      lapsed: false
-      page: https://central.sonatype.com/artifact/com.ortto/androidsdk
-      repo_leg: github-org:autopilot3
-      publisher_leg: groupId:ortto.com
-      matched_by: domain
-    current: true
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-official-sdks.py
-    detected: '2026-10-18'
-  detected_by: sweep-official-sdks.py
-  first_seen: '2026-10-18'
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/725231/ortto/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - Ortto
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: CRM and Marketing
 templates: []
