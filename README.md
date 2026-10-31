@@ -1,4 +1,4 @@
-# Ortto (ortto)
+# Ortto
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,159 +64,168 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ortto (formerly Autopilot) is a marketing automation, customer data platform (CDP), and analytics product. Its REST API at https://api.ap3api.com/v1 lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign reports, and send transactional email and SMS, all authenticated with a custom API key via the X-Api-Key header.
+Ortto (formerly Autopilot) is a marketing automation, customer data platform (CDP), and analytics product. Its REST API at https://api.ap3api.com/v1 lets applications create and update people/contacts and accounts, send custom activity events, manage tags, retrieve campaign reports, and send transactional email and SMS, all authenticated with a custom API key via the X-Api-Key header, with EU and AU service endpoints for accounts in those data-residency regions. Ortto also runs a first-party hosted MCP server, released in version 1.27 (December 2025), giving agents a read-heavy surface over campaigns, contacts, audiences, reports, schema and knowledge-base content. Ortto publishes no machine-readable OpenAPI; the specifications here are scaffolded from its help-center API reference. Ortto announced in April 2026 that it is joining Canva.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ortto/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ortto/refs/heads/main/apis.yml)
+**Areas:** Marketing Automation · CDP · Customer Data Platform · Analytics · Email · SMS · Transactional Email · Webhook · MCP · Push Notifications
 
-## Tags
+## Ortto on APIs.io
 
-- Marketing Automation
-- CDP
-- Customer Data Platform
-- Analytics
-- Email
+Everything profiled for Ortto is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ortto/](https://apis.io/providers/ortto/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-06-25
-- **Modified:** 2026-06-25
+- [Ortto Accounts API](https://apis.io/apis/ortto/ortto-accounts-api/) — Create, update, retrieve, and manage accounts (organizations).
+- [Ortto Activities API](https://apis.io/apis/ortto/ortto-activities-api/) — Send custom activity events and manage activity definitions.
+- [Ortto Campaigns API](https://apis.io/apis/ortto/ortto-campaigns-api/) — Retrieve campaigns, reports, and assets.
+- [Ortto People API](https://apis.io/apis/ortto/ortto-people-api/) — Create, update, retrieve, and manage people (contacts).
+- [Ortto Tags API](https://apis.io/apis/ortto/ortto-tags-api/) — Retrieve account tags.
+- [Ortto Transactional API](https://apis.io/apis/ortto/ortto-transactional-api/) — Send transactional email and SMS.
 
-## APIs
+### Published properties
 
-### Ortto People / Contacts API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create or update one or more people (merge), retrieve people by query or by IDs, archive, delete, restore, and manage subscriptions and custom fields, with configurable merge strategies.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://help.ortto.com/developer/latest/api-reference/people/](https://help.ortto.com/developer/latest/api-reference/people/)
-- **Base URL:** `https://api.ap3api.com/v1`
+Event-driven and webhook contracts.
 
-#### Tags
+- [Ortto Webhooks](https://apis.io/asyncapis/ortto/ortto-webhooks/)
 
-- People
-- Contacts
-- CDP
+#### MCP servers (1)
 
-#### Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [Documentation](https://help.ortto.com/a-257-create-or-update-one-or-more-people-merge)
-- [API Reference](https://help.ortto.com/a-250-api-reference)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Ortto MCP](https://apis.io/servers/ortto/ortto-mcp/)
 
-### Ortto Custom Activities API
+#### Agentic access (1)
 
-Send up to 100 custom activity events per request (2 MB max) and manage activity definitions, optionally creating or updating the associated person via merge_by or person_id.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://help.ortto.com/a-233-custom-activities-guide](https://help.ortto.com/a-233-custom-activities-guide)
-- **Base URL:** `https://api.ap3api.com/v1`
+- [Ortto Agentic Access](https://apis.io/agentic-access/ortto/ortto-agentic-access/)
 
-#### Tags
+#### Collections (7)
 
-- Activities
-- Events
-- Tracking
+Postman and Open Collection request collections.
 
-#### Properties
+- [Ortto API](https://apis.io/collections/ortto/open-ortto/)
+- [Ortto Accounts API](https://apis.io/collections/ortto/open-ortto-accounts-api/)
+- [Ortto Accounts Activities API](https://apis.io/collections/ortto/open-ortto-activities-api/)
+- [Ortto Accounts Campaigns API](https://apis.io/collections/ortto/open-ortto-campaigns-api/)
+- [Ortto Accounts People API](https://apis.io/collections/ortto/open-ortto-people-api/)
+- [Ortto Accounts Tags API](https://apis.io/collections/ortto/open-ortto-tags-api/)
+- [Ortto Accounts Transactional API](https://apis.io/collections/ortto/open-ortto-transactional-api/)
 
-- [Documentation](https://help.ortto.com/a-271-create-a-custom-activity-event-create)
-- [API Reference](https://help.ortto.com/a-250-api-reference)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Overlays (12)
 
-### Ortto Campaigns API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-Retrieve campaigns by time period (calendar), pull campaign and asset reports, and fetch the HTML or SMS body of email and SMS assets.
+- [Ortto Accounts Api Overlay](https://apis.io/overlays/ortto/ortto-accounts-api-overlay/)
+- [Ortto Accounts Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-accounts-api-phrasing-overlay/)
+- [Ortto Activities Api Overlay](https://apis.io/overlays/ortto/ortto-activities-api-overlay/)
+- [Ortto Activities Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-activities-api-phrasing-overlay/)
+- [Ortto Campaigns Api Overlay](https://apis.io/overlays/ortto/ortto-campaigns-api-overlay/)
+- [Ortto Campaigns Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-campaigns-api-phrasing-overlay/)
+- [Ortto People Api Overlay](https://apis.io/overlays/ortto/ortto-people-api-overlay/)
+- [Ortto People Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-people-api-phrasing-overlay/)
+- [Ortto Tags Api Overlay](https://apis.io/overlays/ortto/ortto-tags-api-overlay/)
+- [Ortto Tags Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-tags-api-phrasing-overlay/)
+- [Ortto Transactional Api Overlay](https://apis.io/overlays/ortto/ortto-transactional-api-overlay/)
+- [Ortto Transactional Api Phrasing Overlay](https://apis.io/overlays/ortto/ortto-transactional-api-phrasing-overlay/)
 
-- **Human URL:** [https://help.ortto.com/a-686-retrieve-a-campaign-or-asset-report-get](https://help.ortto.com/a-686-retrieve-a-campaign-or-asset-report-get)
-- **Base URL:** `https://api.ap3api.com/v1`
+#### Security (4)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Campaigns
-- Reports
-- Assets
+- [Ortto Authentication](https://apis.io/security/ortto/ortto-authentication/)
+- [Ortto Domain Security](https://apis.io/security/ortto/ortto-domain-security/)
+- [Ortto Trust Center](https://apis.io/security/ortto/ortto-trust-center/)
+- [Ortto Vulnerability Disclosure](https://apis.io/security/ortto/ortto-vulnerability-disclosure/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [Documentation](https://help.ortto.com/a-887-using-the-api-to-export-campaign-data)
-- [API Reference](https://help.ortto.com/a-250-api-reference)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published plans, tiers and prices.
 
-### Ortto Tags API
+- [Ortto Plans Pricing](https://apis.io/plans/ortto/ortto-plans-pricing/)
 
-Retrieve the list of tags configured on an account, optionally filtered by a search term; people are tagged and untagged through the people merge endpoint.
+#### Rate limits (1)
 
-- **Human URL:** [https://help.ortto.com/a-263-retrieve-a-list-of-tags-get](https://help.ortto.com/a-263-retrieve-a-list-of-tags-get)
-- **Base URL:** `https://api.ap3api.com/v1`
+Published request limits.
 
-#### Tags
+- [Ortto Rate Limits](https://apis.io/rate-limits/ortto/ortto-rate-limits/)
 
-- Tags
-- Segmentation
+#### FinOps (1)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [Documentation](https://help.ortto.com/a-227-tagging-and-untagging-people)
-- [API Reference](https://help.ortto.com/a-250-api-reference)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Ortto Finops](https://apis.io/finops/ortto/ortto-finops/)
 
-### Ortto Transactional Email API
+## Where to find this API
 
-Send transactional (or, with non_transactional set, marketing) email and SMS via a single POST, with support for up to 5 base64-encoded attachments; the endpoint returns a 202 on acceptance.
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- **Human URL:** [https://help.ortto.com/a-242-using-the-api-to-send-emails](https://help.ortto.com/a-242-using-the-api-to-send-emails)
-- **Base URL:** `https://api.ap3api.com/v1`
-
-#### Tags
-
-- Transactional
-- Email
-- Messaging
-
-#### Properties
-
-- [Documentation](https://help.ortto.com/a-827-send-emails-via-api)
-- [API Reference](https://help.ortto.com/a-250-api-reference)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Ortto Webhooks
-
-Outbound webhooks delivered from Ortto journeys/playbooks let external systems react to contact and campaign events; configuration is done in the Ortto app rather than through a dedicated public REST resource.
-
-- **Human URL:** [https://help.ortto.com/a-223-developer-guide](https://help.ortto.com/a-223-developer-guide)
-- **Base URL:** `https://api.ap3api.com/v1`
-
-#### Tags
-
-- Webhooks
-- Events
-
-#### Properties
-
-- [Documentation](https://help.ortto.com/a-223-developer-guide)
-- [OpenAPI](openapi/ortto-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ortto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ortto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/autopilot3)
-- [LinkedIn](https://www.linkedin.com/company/ortto)
 - [Website](https://ortto.com/)
 - [Documentation](https://ortto.com/developers/)
-- [Plans](plans/ortto-plans-pricing.yml)
-- [Rate Limits](rate-limits/ortto-rate-limits.yml)
-- [Fin Ops](finops/ortto-finops.yml)
+- [Getting started](https://help.ortto.com/a-222-ortto-developer-documentation)
+- [Sign up](https://ortto.com/trial/)
+- [Support](https://help.ortto.com/)
+- [Changelog](https://roadmap.ortto.com/changelog)
+- [Blog](https://ortto.com/blog)
+- [Terms of service](https://ortto.com/terms/)
+- [Privacy policy](https://ortto.com/privacy/)
+- [GitHub](https://github.com/autopilot3)
+- [Status](https://www.orttostatus.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 65.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 56.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 89.5 |
+| Developer ergonomics | 67.3 |
+| Access clarity | 81.6 |
+
+**Agent readiness 32.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.0** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ortto/](https://apis.io/providers/ortto/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ortto: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ortto/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
